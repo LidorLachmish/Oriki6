@@ -1,3 +1,5 @@
+</html>
+
 <!DOCTYPE html>
 <html lang="he" dir="rtl">
 <head>
@@ -5,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>W837J — Pre-Departure Checklist</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800;900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght=300;400;600;800;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="css/style.css">
 
 
@@ -785,6 +787,7 @@ input { font-family: inherit; }
     });
   }
 
+  // קטגוריות Find מקורי
   function openEditCategoryModal(catId) {
     const cat = ChecklistStore.getState().categories.find(c => c.id === catId);
     if (!cat) return;
@@ -1029,8 +1032,6 @@ input { font-family: inherit; }
     }
   ]
 }
-
-
 </script>
 
 <script>
@@ -1058,28 +1059,29 @@ const CONFIG = {
   autoRefreshSeconds: 1,    // תדירות רענון אוטומטי
   resetIntervalDays: 7       // תדירות איפוס שבועי
 };
-const jsonText = document.getElementById("jsonData").textContent;
-const data = JSON.parse(jsonText);
 
-const app = document.getElementById("app");
+// תיקון קריטי: הפעלת הלוגיקה בצורה בטוחה שתמנע את שיבוש ה-Render של המערכת הראשית
+document.addEventListener("DOMContentLoaded", () => {
+  const jsonText = document.getElementById("jsonData").textContent;
+  const data = JSON.parse(jsonText);
+  const app = document.getElementById("app");
 
-data.categories.forEach(category => {
-
-  app.innerHTML += `<h2>${category.name}</h2>`;
-
-  category.tasks.forEach(task => {
-
-    app.innerHTML += `
-      <div>
-        <input type="checkbox">
-        ${task.title}
-      </div>
-    `;
-
-  });
-
+  if (app && data && data.categories) {
+    data.categories.forEach(category => {
+      app.innerHTML += `<h2>${category.name}</h2>`;
+      if (category.tasks) {
+        category.tasks.forEach(task => {
+          app.innerHTML += `
+            <div>
+              <input type="checkbox">
+              ${task.title}
+            </div>
+          `;
+        });
+      }
+    });
+  }
 });
-
 </script>
 
 </html>
