@@ -2,482 +2,1106 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>W837J — Pre-Departure Checklist</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>W837J — PRE-DEPARTURE CHECKLIST</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;800;900&display=swap" rel="stylesheet">
-
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;600;700;800;900&family=Rajdhani:wght@500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ============================================================
-   W837J — Military Tactical Dashboard | Dark Naval Interface
-   ============================================================ */
-
+/* ======================================================================
+   W837J — NAVAL TACTICAL CHECKLIST  |  Military-Grade Dark Interface
+   ====================================================================== */
 :root {
-  --bg: #050505;
-  --card: #111111;
-  --card-alt: #161616;
-  --border: #292929;
-  --red: #C90000;
-  --red-dim: #7a0000;
-  --text: #FFFFFF;
-  --text-dim: #9a9a9a;
-  --green: #00C853;
-  --amber: #d99a1e;
-  --radius: 10px;
-  --shadow: 0 8px 24px rgba(0,0,0,.5);
+  --bg:         #080808;
+  --bg2:        #0d0d0d;
+  --bg3:        #111111;
+  --card:       #131313;
+  --card2:      #181818;
+  --border:     #252525;
+  --border2:    #1e1e1e;
+  --red:        #CC0000;
+  --red2:       #991000;
+  --red-glow:   rgba(204,0,0,.35);
+  --red-dim:    rgba(204,0,0,.12);
+  --green:      #00C853;
+  --green-dim:  rgba(0,200,83,.14);
+  --amber:      #D4A017;
+  --amber-dim:  rgba(212,160,23,.14);
+  --text:       #EDEDED;
+  --text2:      #888888;
+  --text3:      #555555;
+  --white:      #FFFFFF;
+  --radius:     6px;
+  --radius2:    10px;
+  --font-main:  'Heebo', sans-serif;
+  --font-hud:   'Rajdhani', sans-serif;
+  --sh:         0 4px 20px rgba(0,0,0,.6);
+  --sh2:        0 8px 40px rgba(0,0,0,.8);
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-html, body {
-  direction: rtl;
-  background: var(--bg);
-  color: var(--text);
-  font-family: 'Heebo', sans-serif;
-  min-height: 100vh;
-}
+html { scroll-behavior: smooth; }
 
 body {
-  background-image:
-    radial-gradient(circle at 20% 0%, rgba(201,0,0,.06), transparent 40%),
-    radial-gradient(circle at 80% 100%, rgba(201,0,0,.05), transparent 40%);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-main);
+  min-height: 100vh;
+  overflow-x: hidden;
   padding-bottom: 60px;
 }
 
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 15% 0%, rgba(204,0,0,.07) 0%, transparent 55%),
+    radial-gradient(ellipse at 85% 100%, rgba(204,0,0,.05) 0%, transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
 img { max-width: 100%; display: block; }
-button { font-family: inherit; cursor: pointer; }
-input, select { font-family: inherit; }
+button { font-family: var(--font-main); cursor: pointer; border: none; }
+input, select { font-family: var(--font-main); }
+a { color: inherit; text-decoration: none; }
 
-.container { max-width: 1400px; margin: 0 auto; padding: 0 24px; }
+.z1 { position: relative; z-index: 1; }
 
-/* ---------- Header ---------- */
-.site-header {
+/* ── TACTICAL TOP BAR ─────────────────────────────── */
+.top-bar {
+  background: #050505;
+  border-bottom: 1px solid var(--border2);
+  padding: 5px 20px;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 24px;
-  padding: 20px 24px;
-  background: linear-gradient(180deg, #0a0a0a, #050505);
-  border-bottom: 1px solid var(--border);
-  flex-wrap: wrap;
-}
-
-.header-side { display: flex; align-items: center; gap: 14px; min-width: 0; }
-
-.header-side img {
-  height: 64px;
-  width: 64px;
-  object-fit: contain;
-  filter: drop-shadow(0 0 8px rgba(201,0,0,.4));
-}
-
-.header-center { text-align: center; flex: 1; min-width: 220px; }
-
-.header-center .vessel-id {
-  font-size: 2rem;
-  font-weight: 900;
-  color: var(--red);
-  letter-spacing: .08em;
-  text-shadow: 0 0 14px rgba(201,0,0,.5);
-}
-
-.header-center .vessel-sub {
-  font-size: .85rem;
-  color: var(--text-dim);
-  letter-spacing: .15em;
+  font-family: var(--font-hud);
+  font-size: .7rem;
+  letter-spacing: .18em;
+  color: var(--text3);
   text-transform: uppercase;
-  margin-top: 2px;
 }
 
-/* ---------- Operator bar (replaces blocking modal) ---------- */
-.operator-bar {
+.top-bar-left { display: flex; align-items: center; gap: 8px; }
+.top-bar-left::before {
+  content: "▶";
+  color: var(--red);
+  font-size: .55rem;
+}
+
+.top-bar-right { display: flex; align-items: center; gap: 16px; }
+.tb-live { display: flex; align-items: center; gap: 5px; color: var(--green); }
+.tb-live-dot {
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 8px var(--green);
+  animation: pulse 2s infinite;
+}
+@keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.4} }
+
+/* ── MAIN HEADER ──────────────────────────────────── */
+.site-header {
+  position: relative;
+  display: grid;
+  grid-template-columns: 120px 1fr 120px;
+  align-items: center;
+  gap: 0;
+  padding: 16px 24px;
+  background: linear-gradient(180deg, #0c0c0c 0%, #080808 100%);
+  border-bottom: 2px solid var(--red2);
+  overflow: hidden;
+  min-height: 100px;
+}
+
+.site-header::after {
+  content: "";
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--red), transparent);
+  opacity: .6;
+}
+
+/* diagonal hatch top-left */
+.site-header::before {
+  content: "";
+  position: absolute;
+  top: 0; right: 0;
+  width: 260px; height: 100%;
+  background: repeating-linear-gradient(
+    -45deg,
+    transparent,
+    transparent 6px,
+    rgba(204,0,0,.04) 6px,
+    rgba(204,0,0,.04) 7px
+  );
+  pointer-events: none;
+}
+
+.header-logo {
+  display: flex;
+  justify-content: center;
+}
+.header-logo img {
+  height: 80px;
+  width: 80px;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(204,0,0,.5)) drop-shadow(0 0 4px rgba(204,0,0,.8));
+}
+
+.header-center { text-align: center; }
+
+.vessel-id {
+  font-family: var(--font-hud);
+  font-size: clamp(2.2rem, 6vw, 3.5rem);
+  font-weight: 700;
+  letter-spacing: .06em;
+  color: var(--red);
+  text-shadow:
+    0 0 20px rgba(204,0,0,.8),
+    0 0 60px rgba(204,0,0,.3),
+    2px 2px 0 #000;
+  line-height: 1;
+}
+
+.vessel-sub {
+  font-family: var(--font-hud);
+  font-size: clamp(.6rem, 2vw, .85rem);
+  letter-spacing: .25em;
+  color: var(--text2);
+  text-transform: uppercase;
+  margin-top: 4px;
+}
+
+.header-ship {
+  display: flex;
+  justify-content: center;
+}
+.header-ship img {
+  height: 80px;
+  object-fit: contain;
+  filter: brightness(.9) drop-shadow(0 2px 8px rgba(0,0,0,.8));
+}
+
+/* ── STATS BAR ────────────────────────────────────── */
+.stats-bar {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  border-bottom: 1px solid var(--border);
+  background: var(--bg2);
+}
+
+.stat-block {
   display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 10px 24px;
-  background: var(--card-alt);
+  gap: 14px;
+  padding: 14px 20px;
+  border-left: 1px solid var(--border);
+  position: relative;
+}
+.stat-block:last-child { border-left: none; }
+
+.stat-icon {
+  width: 40px; height: 40px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.stat-info {}
+.stat-label {
+  font-family: var(--font-hud);
+  font-size: .65rem;
+  letter-spacing: .12em;
+  color: var(--text3);
+  text-transform: uppercase;
+}
+.stat-label-he { font-size: .7rem; color: var(--text2); }
+.stat-val {
+  font-family: var(--font-hud);
+  font-size: 1.3rem;
+  font-weight: 700;
+  letter-spacing: .05em;
+  line-height: 1.1;
+}
+.sv-green { color: var(--green); text-shadow: 0 0 10px rgba(0,200,83,.4); }
+.sv-red   { color: var(--red);   text-shadow: 0 0 10px rgba(204,0,0,.4); }
+.sv-amber { color: var(--amber); }
+.sv-white { color: var(--white); }
+
+/* ── OPERATOR + ACTION BAR ────────────────────────── */
+.action-bar {
+  background: var(--bg2);
   border-bottom: 1px solid var(--border);
+  padding: 10px 20px;
+  display: flex;
   flex-wrap: wrap;
-  font-size: .85rem;
+  align-items: center;
+  gap: 10px;
 }
 
-.operator-bar label { color: var(--text-dim); }
-
-.operator-bar input {
-  padding: 6px 10px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  color: var(--text);
-  font-size: .85rem;
-  width: 160px;
+.op-label {
+  font-family: var(--font-hud);
+  font-size: .7rem;
+  letter-spacing: .1em;
+  color: var(--text2);
+  text-transform: uppercase;
+  white-space: nowrap;
 }
-.operator-bar input:focus { outline: none; border-color: var(--red); }
 
-.sync-status { margin-right: auto; font-size: .75rem; color: var(--text-dim); display: flex; align-items: center; gap: 6px; }
-.sync-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--text-dim); flex-shrink: 0; }
-.sync-dot.live { background: var(--green); box-shadow: 0 0 6px var(--green); }
-.sync-dot.local { background: var(--amber); }
-
-/* ---------- Toolbar ---------- */
-.toolbar { display: flex; flex-wrap: wrap; align-items: center; gap: 12px; padding: 16px 0; }
-.toolbar .spacer { flex: 1; }
-
-.search-box { position: relative; flex: 1; min-width: 200px; max-width: 320px; }
-.search-box input {
-  width: 100%;
-  padding: 10px 14px;
+.op-input {
+  padding: 7px 12px;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   color: var(--text);
-  font-size: .9rem;
+  font-size: .85rem;
+  width: 150px;
+  transition: border-color .2s;
 }
-.search-box input:focus { outline: none; border-color: var(--red); }
+.op-input:focus { outline: none; border-color: var(--red); }
 
-.filter-group { display: flex; gap: 6px; }
-.filter-btn {
-  padding: 9px 16px;
+.ab-sep { width: 1px; height: 28px; background: var(--border); flex-shrink: 0; }
+
+.ab-spacer { flex: 1; }
+
+.search-wrap { position: relative; }
+.search-input {
+  padding: 7px 12px 7px 32px;
   background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  color: var(--text-dim);
-  font-size: .82rem;
-  transition: all .2s;
+  color: var(--text);
+  font-size: .85rem;
+  width: 200px;
+  transition: border-color .2s;
 }
-.filter-btn.active, .filter-btn:hover {
+.search-input:focus { outline: none; border-color: var(--red); }
+.search-icon {
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--text3);
+  font-size: .75rem;
+  pointer-events: none;
+}
+
+.filter-group { display: flex; gap: 4px; }
+.fbtn {
+  padding: 6px 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text2);
+  font-size: .78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all .15s;
+}
+.fbtn.active, .fbtn:hover {
   border-color: var(--red);
   color: var(--text);
-  background: rgba(201,0,0,.12);
+  background: var(--red-dim);
 }
 
-/* ---------- Buttons ---------- */
+/* ── ACTION BUTTONS ───────────────────────────────── */
 .btn {
-  padding: 10px 18px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
   border-radius: var(--radius);
-  border: 1px solid var(--border);
-  background: var(--card);
-  color: var(--text);
-  font-size: .85rem;
-  font-weight: 600;
-  transition: all .2s ease;
+  font-size: .82rem;
+  font-weight: 700;
+  font-family: var(--font-hud);
+  letter-spacing: .06em;
+  cursor: pointer;
+  transition: all .18s;
+  text-transform: uppercase;
+  white-space: nowrap;
+  border: 1px solid transparent;
 }
-.btn:hover { transform: translateY(-1px); box-shadow: var(--shadow); }
-.btn-primary { background: var(--red); border-color: var(--red); }
-.btn-primary:hover { background: #e60000; }
-.btn-danger { background: var(--red-dim); border-color: var(--red); }
-.btn-ghost { background: transparent; }
+.btn:hover { transform: translateY(-1px); box-shadow: var(--sh); }
+.btn:active { transform: translateY(0); }
 
-.btn-add-task {
-  width: 100%;
-  margin-top: 12px;
+.btn-commit {
+  background: var(--red);
+  border-color: var(--red);
+  color: #fff;
+  box-shadow: 0 0 14px rgba(204,0,0,.3);
+}
+.btn-commit:hover { background: #e60000; box-shadow: 0 0 22px rgba(204,0,0,.5); }
+.btn-commit:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+.btn-refresh {
+  background: var(--card);
+  border-color: var(--border);
+  color: var(--text2);
+}
+.btn-refresh:hover { border-color: var(--green); color: var(--green); background: var(--green-dim); }
+
+.btn-reset {
+  background: transparent;
+  border-color: var(--border);
+  color: var(--text3);
+}
+.btn-reset:hover { border-color: var(--red); color: var(--red); }
+
+.btn-add {
   background: transparent;
   border: 1px dashed var(--border);
-  color: var(--text-dim);
-  padding: 8px;
-  border-radius: 8px;
-  font-size: .82rem;
+  color: var(--text3);
+  padding: 6px 12px;
+  font-size: .75rem;
 }
-.btn-add-task:hover { border-color: var(--red); color: var(--red); }
+.btn-add:hover { border-color: var(--red); color: var(--red); }
 
-/* ---------- Dashboard ---------- */
-.dashboard {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
-  gap: 14px;
-  margin: 18px 0;
-}
-
-.stat-card {
-  background: var(--card);
-  border: 1px solid var(--border);
+.btn-icon {
+  width: 28px; height: 28px;
+  padding: 0;
+  background: transparent;
+  border: 1px solid transparent;
   border-radius: var(--radius);
-  padding: 16px 18px;
+  color: var(--text3);
+  font-size: .85rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all .15s;
+  text-transform: none;
+  letter-spacing: 0;
+}
+.btn-icon:hover { background: var(--card2); border-color: var(--border); color: var(--red); }
+.btn-icon:disabled { opacity: .4; cursor: not-allowed; }
+
+/* spin animation for refresh */
+@keyframes spin { to { transform: rotate(360deg); } }
+.spinning { animation: spin .8s linear infinite; }
+
+/* ── MAIN CONTAINER ───────────────────────────────── */
+.container { max-width: 1440px; margin: 0 auto; padding: 0 20px; }
+
+/* ── SECTION HEADER ───────────────────────────────── */
+.section-hd {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 18px 0 10px;
+}
+.section-hd-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--red), transparent);
+  opacity: .4;
+}
+.section-hd-title {
+  font-family: var(--font-hud);
+  font-size: .7rem;
+  letter-spacing: .2em;
+  color: var(--red);
+  text-transform: uppercase;
+}
+.section-hd-line.rev { background: linear-gradient(90deg, transparent, var(--red)); }
+
+/* ── CATEGORY OVERVIEW GRID ───────────────────────── */
+.cat-overview {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 8px;
+  padding-bottom: 8px;
+}
+
+.cat-card {
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius);
+  padding: 10px 8px;
+  text-align: center;
+  cursor: pointer;
+  transition: all .18s;
   position: relative;
   overflow: hidden;
 }
-.stat-card::before {
+.cat-card::before {
   content: "";
   position: absolute;
-  inset-inline-start: 0;
-  top: 0; bottom: 0;
-  width: 3px;
+  bottom: 0; left: 0; right: 0;
+  height: 2px;
   background: var(--red);
+  transform: scaleX(0);
+  transition: transform .2s;
 }
-.stat-label { font-size: .72rem; color: var(--text-dim); letter-spacing: .05em; margin-bottom: 6px; }
-.stat-value { font-size: 1.5rem; font-weight: 800; }
-.mission-ready { color: var(--green); }
-.mission-not-ready { color: var(--red); }
+.cat-card:hover::before { transform: scaleX(1); }
+.cat-card:hover {
+  border-color: var(--red2);
+  background: var(--card2);
+  box-shadow: 0 0 14px rgba(204,0,0,.15);
+}
+.cat-card.complete { border-color: rgba(0,200,83,.3); }
+.cat-card.complete::before { background: var(--green); transform: scaleX(1); }
 
-.progress-bar-outer {
-  height: 8px;
-  background: var(--card-alt);
-  border: 1px solid var(--border);
-  border-radius: 6px;
-  overflow: hidden;
-  margin: 10px 0 4px;
+.cat-num {
+  font-family: var(--font-hud);
+  font-size: .6rem;
+  color: var(--text3);
+  letter-spacing: .1em;
+  margin-bottom: 4px;
 }
-.progress-bar-fill {
+.cat-icon { font-size: 1.3rem; margin-bottom: 4px; }
+.cat-name-en {
+  font-family: var(--font-hud);
+  font-size: .55rem;
+  letter-spacing: .08em;
+  color: var(--text2);
+  text-transform: uppercase;
+  margin-bottom: 1px;
+}
+.cat-name-he { font-size: .7rem; color: var(--text); font-weight: 600; margin-bottom: 4px; }
+.cat-prog {
+  font-family: var(--font-hud);
+  font-size: .75rem;
+  font-weight: 700;
+  color: var(--red);
+}
+.cat-card.complete .cat-prog { color: var(--green); }
+
+/* ── DETAILED CHECKLIST GRID ──────────────────────── */
+.checklist-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.cl-card {
+  background: var(--card);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius2);
+  overflow: hidden;
+  box-shadow: var(--sh);
+  transition: border-color .2s;
+}
+.cl-card:hover { border-color: var(--border); }
+.cl-card.complete { border-color: rgba(0,200,83,.25); }
+
+.cl-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border2);
+  gap: 8px;
+}
+
+.cl-card-title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+.cl-card-num {
+  font-family: var(--font-hud);
+  font-size: .65rem;
+  color: var(--text3);
+  letter-spacing: .1em;
+  flex-shrink: 0;
+}
+.cl-card-icon { font-size: .95rem; flex-shrink: 0; }
+.cl-card-name {
+  font-weight: 800;
+  font-size: .9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.cl-card-cnt {
+  font-family: var(--font-hud);
+  font-size: .8rem;
+  color: var(--text2);
+  flex-shrink: 0;
+}
+.cl-card-acts { display: flex; gap: 2px; flex-shrink: 0; }
+
+/* progress bar */
+.cl-progress {
+  height: 3px;
+  background: var(--bg3);
+}
+.cl-progress-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--red), #ff3b3b);
-  width: 0%;
+  background: linear-gradient(90deg, var(--red), #ff4444);
   transition: width .4s ease;
 }
+.cl-card.complete .cl-progress-fill { background: var(--green); }
 
-/* ---------- Categories Grid ---------- */
-.categories-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 16px;
-  margin-top: 18px;
-}
-
-.card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; box-shadow: var(--shadow); }
-
-.card-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px; }
-.card-title-wrap { display: flex; align-items: baseline; gap: 10px; }
-.card-title { font-size: 1.05rem; font-weight: 800; border-right: 3px solid var(--red); padding-right: 8px; }
-.card-progress { font-size: .8rem; color: var(--text-dim); }
-.card-actions { display: flex; gap: 4px; }
-
-.icon-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-dim);
-  width: 28px; height: 28px;
-  border-radius: 6px;
-  font-size: .85rem;
-  transition: all .15s;
-}
-.icon-btn:hover { background: var(--card-alt); color: var(--red); border-color: var(--border); }
-
-.card-progress-bar { height: 5px; background: var(--card-alt); border-radius: 4px; overflow: hidden; margin-bottom: 12px; }
-.card-progress-fill { height: 100%; background: var(--green); transition: width .4s ease; }
-
-.task-list { list-style: none; display: flex; flex-direction: column; gap: 6px; }
+/* task list */
+.task-list { list-style: none; padding: 6px 0; }
 
 .task-item {
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  padding: 8px;
-  border-radius: 8px;
-  border: 1px solid transparent;
-  transition: background .2s, border-color .2s, opacity .3s;
+  gap: 8px;
+  padding: 7px 14px;
+  border-bottom: 1px solid var(--border2);
+  transition: background .15s;
+  position: relative;
 }
-.task-item:hover { background: var(--card-alt); border-color: var(--border); }
-.task-item.toggling { opacity: .6; }
+.task-item:last-child { border-bottom: none; }
+.task-item:hover { background: var(--card2); }
+.task-item.hidden { display: none; }
 
-.task-checkbox-wrap { position: relative; width: 20px; height: 20px; flex-shrink: 0; margin-top: 2px; }
-.task-checkbox { position: absolute; opacity: 0; width: 20px; height: 20px; cursor: pointer; }
-.checkmark { position: absolute; inset: 0; border: 2px solid var(--border); border-radius: 5px; background: var(--card-alt); transition: all .2s ease; }
-.task-checkbox:checked + .checkmark { background: var(--green); border-color: var(--green); }
-.task-checkbox:checked + .checkmark::after {
+/* ── CUSTOM CHECKBOX ──────────────────────────────── */
+.cb-wrap {
+  flex-shrink: 0;
+  width: 18px; height: 18px;
+  position: relative;
+  margin-top: 2px;
+  cursor: pointer;
+}
+.cb-real {
+  position: absolute;
+  inset: 0;
+  opacity: 0;
+  width: 100%; height: 100%;
+  cursor: pointer;
+  z-index: 2;
+}
+.cb-visual {
+  position: absolute;
+  inset: 0;
+  border: 1.5px solid var(--border);
+  border-radius: 4px;
+  background: var(--bg3);
+  transition: all .15s;
+  pointer-events: none;
+}
+.cb-real:hover ~ .cb-visual { border-color: var(--red); }
+.cb-real:checked ~ .cb-visual {
+  background: var(--green);
+  border-color: var(--green);
+  box-shadow: 0 0 8px rgba(0,200,83,.3);
+}
+.cb-real:checked ~ .cb-visual::after {
   content: "";
   position: absolute;
-  right: 6px; top: 2px;
-  width: 5px; height: 10px;
-  border: solid #fff;
+  right: 5px; top: 2px;
+  width: 5px; height: 9px;
+  border: solid #000;
   border-width: 0 2px 2px 0;
   transform: rotate(45deg);
 }
-.task-checkbox:hover + .checkmark { border-color: var(--red); }
 
+/* ── TASK INFO ─────────────────────────────────────── */
 .task-info { flex: 1; min-width: 0; }
-.task-title { font-size: .88rem; transition: color .3s; }
-.task-item.completed .task-title { color: var(--text-dim); text-decoration: line-through; text-decoration-color: var(--green); }
 
-.task-meta { display: flex; align-items: center; gap: 6px; font-size: .7rem; color: var(--text-dim); margin-top: 3px; flex-wrap: wrap; }
-.task-status-pill {
-  font-size: .65rem;
-  font-weight: 700;
-  padding: 2px 8px;
-  border-radius: 20px;
-  letter-spacing: .03em;
+.task-row { display: flex; align-items: center; gap: 8px; min-width: 0; }
+
+.task-title-he {
+  font-size: .86rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  flex: 1;
+  transition: color .2s;
 }
-.task-status-pill.done { background: rgba(0,200,83,.15); color: var(--green); border: 1px solid var(--green); }
-.task-status-pill.pending { background: rgba(201,0,0,.12); color: var(--red); border: 1px solid var(--red-dim); }
-.task-owner { color: var(--text-dim); }
-.task-owner b { color: var(--text); font-weight: 600; }
 
-.task-actions { display: flex; gap: 2px; opacity: 0; transition: opacity .2s; }
-.task-item:hover .task-actions { opacity: 1; }
+.task-status {
+  font-family: var(--font-hud);
+  font-size: .6rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+  padding: 2px 7px;
+  border-radius: 3px;
+  white-space: nowrap;
+  flex-shrink: 0;
+}
+.status-pending {
+  background: rgba(204,0,0,.15);
+  color: var(--red);
+  border: 1px solid rgba(204,0,0,.3);
+}
+.status-done {
+  background: var(--green-dim);
+  color: var(--green);
+  border: 1px solid rgba(0,200,83,.3);
+}
 
-/* ---------- Modal ---------- */
-.modal-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(0,0,0,.7);
-  backdrop-filter: blur(3px);
+.task-item.done .task-title-he {
+  color: var(--text2);
+  text-decoration: line-through;
+  text-decoration-color: rgba(0,200,83,.5);
+}
+
+.task-meta {
+  font-size: .68rem;
+  color: var(--text3);
+  margin-top: 2px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  min-width: 0;
+}
+.task-meta b { color: var(--text2); font-weight: 600; }
+.task-meta .dot { color: var(--border); }
+
+.task-acts {
+  display: flex;
+  gap: 1px;
+  opacity: 0;
+  flex-shrink: 0;
+  transition: opacity .15s;
+}
+.task-item:hover .task-acts { opacity: 1; }
+
+/* add task button */
+.btn-add-task {
+  width: 100%;
+  padding: 7px 14px;
+  background: transparent;
+  border: none;
+  border-top: 1px dashed var(--border2);
+  color: var(--text3);
+  font-size: .78rem;
+  cursor: pointer;
+  text-align: center;
+  transition: all .15s;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 5px;
+}
+.btn-add-task:hover { color: var(--red); background: var(--red-dim); }
+
+/* ── MODAL ────────────────────────────────────────── */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.75);
+  backdrop-filter: blur(4px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 900;
+  padding: 16px;
   opacity: 0;
   transition: opacity .2s;
-  z-index: 1000;
-  padding: 16px;
 }
-.modal-overlay.show { opacity: 1; }
+.overlay.show { opacity: 1; }
 
 .modal-box {
   background: var(--card);
   border: 1px solid var(--border);
-  border-radius: var(--radius);
+  border-radius: var(--radius2);
   width: 100%;
   max-width: 420px;
-  box-shadow: var(--shadow);
-  transform: translateY(10px);
+  box-shadow: var(--sh2);
+  transform: translateY(12px);
   transition: transform .2s;
 }
-.modal-overlay.show .modal-box { transform: translateY(0); }
+.overlay.show .modal-box { transform: translateY(0); }
 
-.modal-header { display: flex; justify-content: space-between; align-items: center; padding: 16px 18px; border-bottom: 1px solid var(--border); }
-.modal-close { background: transparent; border: none; color: var(--text-dim); font-size: 1.1rem; }
+.modal-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 18px;
+  border-bottom: 1px solid var(--border2);
+}
+.modal-hd h3 {
+  font-family: var(--font-hud);
+  font-size: 1rem;
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+.modal-close { background: transparent; border: none; color: var(--text2); font-size: 1rem; cursor: pointer; padding: 4px; }
+.modal-close:hover { color: var(--red); }
+
 .modal-body { padding: 18px; }
-.modal-input { width: 100%; padding: 10px 12px; background: var(--card-alt); border: 1px solid var(--border); border-radius: 8px; color: var(--text); margin-bottom: 10px; }
-.modal-input:focus { outline: none; border-color: var(--red); }
-.modal-footer { display: flex; justify-content: flex-end; gap: 10px; padding: 14px 18px; border-top: 1px solid var(--border); }
+.modal-body p { color: var(--text2); font-size: .9rem; line-height: 1.5; }
 
-/* ---------- Toast ---------- */
-#toast-container { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; flex-direction: column; gap: 8px; z-index: 2000; }
+.m-input {
+  width: 100%;
+  padding: 10px 12px;
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  color: var(--text);
+  font-size: .9rem;
+  margin-bottom: 0;
+  transition: border-color .2s;
+}
+.m-input:focus { outline: none; border-color: var(--red); }
+
+.modal-ft {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 12px 18px;
+  border-top: 1px solid var(--border2);
+}
+
+.btn-sm {
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  font-size: .82rem;
+  font-weight: 700;
+  cursor: pointer;
+  border: 1px solid var(--border);
+  background: var(--card2);
+  color: var(--text2);
+  transition: all .15s;
+}
+.btn-sm:hover { border-color: var(--red); color: var(--text); }
+.btn-sm-primary { background: var(--red); border-color: var(--red); color: #fff; }
+.btn-sm-primary:hover { background: #e60000; }
+.btn-sm-danger { background: rgba(204,0,0,.15); border-color: rgba(204,0,0,.4); color: var(--red); }
+.btn-sm-danger:hover { background: rgba(204,0,0,.3); }
+
+/* ── TOAST ────────────────────────────────────────── */
+#toasts {
+  position: fixed;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  z-index: 9999;
+  pointer-events: none;
+  min-width: 280px;
+}
 .toast {
+  padding: 11px 18px;
   background: var(--card);
   border: 1px solid var(--border);
   border-right: 4px solid var(--red);
-  padding: 12px 18px;
-  border-radius: 8px;
-  font-size: .85rem;
-  box-shadow: var(--shadow);
+  border-radius: var(--radius);
+  font-size: .84rem;
+  box-shadow: var(--sh2);
   opacity: 0;
-  transform: translateY(10px);
+  transform: translateY(8px);
   transition: all .3s;
+  pointer-events: none;
 }
 .toast.show { opacity: 1; transform: translateY(0); }
-.toast-success { border-right-color: var(--green); }
-.toast-warning { border-right-color: var(--amber); }
-.toast-info { border-right-color: var(--text-dim); }
+.toast.t-success { border-right-color: var(--green); }
+.toast.t-warn    { border-right-color: var(--amber); }
+.toast.t-info    { border-right-color: #4488ff; }
 
-/* ---------- Footer ---------- */
-.site-footer { text-align: center; color: var(--text-dim); font-size: .75rem; margin-top: 40px; padding: 16px; border-top: 1px solid var(--border); }
+/* ── FOOTER ───────────────────────────────────────── */
+.site-footer {
+  margin-top: 40px;
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+}
+.footer-inner {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 200px;
+  gap: 20px;
+  align-items: center;
+}
+.footer-info-label {
+  font-family: var(--font-hud);
+  font-size: .6rem;
+  letter-spacing: .12em;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+  border-bottom: 1px solid var(--border2);
+  padding-bottom: 4px;
+}
+.footer-info-row { display: flex; gap: 16px; }
+.footer-kv { display: flex; flex-direction: column; gap: 2px; }
+.fk { font-size: .65rem; color: var(--text3); font-family: var(--font-hud); letter-spacing: .08em; text-transform: uppercase; }
+.fv { font-size: .8rem; color: var(--text2); font-weight: 600; }
 
-/* ---------- Responsive ---------- */
-@media (max-width: 768px) {
-  .site-header { flex-direction: column; text-align: center; }
-  .header-center .vessel-id { font-size: 1.4rem; }
-  .toolbar { flex-direction: column; align-items: stretch; }
-  .search-box { max-width: 100%; }
-  .categories-grid { grid-template-columns: 1fr; }
-  .operator-bar { justify-content: center; }
-  .sync-status { margin-right: 0; order: -1; width: 100%; justify-content: center; }
+.footer-sigs { display: flex; gap: 16px; }
+.sig-col { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.sig-line { width: 80px; height: 1px; background: var(--border); }
+.sig-name { font-size: .62rem; color: var(--text3); text-align: center; letter-spacing: .04em; }
+
+.mission-status-box {
+  text-align: center;
+  padding: 10px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--card);
+}
+.ms-label {
+  font-family: var(--font-hud);
+  font-size: .6rem;
+  letter-spacing: .12em;
+  color: var(--text3);
+  text-transform: uppercase;
+  margin-bottom: 4px;
+}
+.ms-label-he { font-size: .72rem; color: var(--text2); margin-bottom: 4px; }
+.ms-val {
+  font-family: var(--font-hud);
+  font-size: 1.2rem;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+.ms-val-he { font-size: .85rem; font-weight: 700; }
+.ms-ready { color: var(--green); text-shadow: 0 0 12px rgba(0,200,83,.5); }
+.ms-notready { color: var(--red); text-shadow: 0 0 12px rgba(204,0,0,.5); }
+
+/* ── SYNC STATUS PILL ─────────────────────────────── */
+.sync-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 3px 10px;
+  border-radius: 20px;
+  font-family: var(--font-hud);
+  font-size: .65rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  border: 1px solid;
+  white-space: nowrap;
+}
+.sync-pill.live  { border-color: rgba(0,200,83,.4);  color: var(--green); background: var(--green-dim); }
+.sync-pill.local { border-color: rgba(212,160,23,.4); color: var(--amber); background: var(--amber-dim); }
+.sync-pill.saving { border-color: rgba(68,136,255,.4); color: #4488ff; background: rgba(68,136,255,.1); }
+.sync-dot2 { width: 5px; height: 5px; border-radius: 50%; background: currentColor; }
+
+/* ── TOOLBAR ──────────────────────────────────────── */
+.toolbar-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 0;
+  flex-wrap: wrap;
 }
 
-/* ---------- Print / PDF Export ---------- */
+/* ── RESPONSIVE ───────────────────────────────────── */
+@media (max-width: 900px) {
+  .cat-overview { grid-template-columns: repeat(4, 1fr); }
+  .stats-bar { grid-template-columns: 1fr 1fr; }
+  .stats-bar .stat-block:last-child { grid-column: span 2; }
+  .footer-inner { grid-template-columns: 1fr 1fr; }
+  .mission-status-box { grid-column: span 2; max-width: 200px; margin: 0 auto; }
+}
+
+@media (max-width: 600px) {
+  .site-header { grid-template-columns: 60px 1fr 60px; padding: 10px 14px; min-height: 80px; }
+  .header-logo img { height: 54px; width: 54px; }
+  .header-ship img { height: 54px; }
+  .vessel-id { font-size: 1.8rem; }
+  .cat-overview { grid-template-columns: repeat(3, 1fr); }
+  .stats-bar { grid-template-columns: 1fr; }
+  .stats-bar .stat-block:last-child { grid-column: span 1; }
+  .stats-bar .stat-block { border-left: none; border-bottom: 1px solid var(--border); }
+  .action-bar { flex-direction: column; align-items: stretch; gap: 8px; }
+  .search-input { width: 100%; }
+  .op-input { width: 100%; }
+  .ab-sep { display: none; }
+  .footer-inner { grid-template-columns: 1fr; }
+  .mission-status-box { max-width: 100%; }
+  .footer-sigs { justify-content: center; }
+  .checklist-grid { grid-template-columns: 1fr; }
+  .toolbar-row { flex-wrap: wrap; }
+  .top-bar-right { display: none; }
+}
+
+@media (max-width: 400px) {
+  .cat-overview { grid-template-columns: repeat(2, 1fr); }
+}
+
+/* ── PRINT ────────────────────────────────────────── */
 @media print {
-  .print-mode .toolbar,
-  .print-mode .operator-bar,
-  .print-mode .task-actions,
-  .print-mode .card-actions,
-  .print-mode .btn-add-task,
-  .print-mode #toast-container,
-  .print-mode #modal-root { display: none !important; }
-  .print-mode body { background: #fff; color: #000; }
-  .print-mode .card { break-inside: avoid; border: 1px solid #999; }
+  .action-bar, .toolbar-row, .task-acts, .btn-add-task, #toasts,
+  #modal-root, .top-bar { display: none !important; }
+  body { background: #fff; color: #000; }
+  .cl-card { border: 1px solid #999; break-inside: avoid; }
+  .vessel-id { color: #000; text-shadow: none; }
 }
 </style>
 </head>
 <body>
 
-<!-- ===== Header ===== -->
-<header class="site-header">
-  <div class="header-side header-right">
-    <img src="assets/emblem.png" alt="סמל הספינה">
+<!-- ===== TOP BAR ===== -->
+<div class="top-bar z1">
+  <div class="top-bar-left">PRE-DEPARTURE CHECKLIST SYSTEM</div>
+  <div class="top-bar-right">
+    <span>NAVAL VESSEL</span>
+    <span style="color:var(--red);font-weight:700">W837J</span>
+    <span id="tb-clock"></span>
+  </div>
+</div>
+
+<!-- ===== MAIN HEADER ===== -->
+<header class="site-header z1">
+  <div class="header-logo">
+    <img src="assets/emblem.png" alt="סמל W837J">
   </div>
   <div class="header-center">
     <div class="vessel-id">W837J</div>
     <div class="vessel-sub">THE CLOWN BEHIND THE GUN</div>
   </div>
-  <div class="header-side header-left">
-    <img src="assets/ship.png" alt="תמונת הספינה">
+  <div class="header-ship">
+    <img src="assets/ship.png" alt="ספינה W837J">
   </div>
 </header>
 
-<!-- ===== Operator Bar (non-blocking) ===== -->
-<div class="operator-bar">
-  <label for="operator-name-input">שם מבצע:</label>
-  <input type="text" id="operator-name-input" placeholder="הזן שם...">
-  <div class="sync-status">
-    <span class="sync-dot" id="sync-dot"></span>
-    <span id="sync-text">בודק חיבור...</span>
+<!-- ===== STATS BAR ===== -->
+<div class="stats-bar z1">
+  <div class="stat-block">
+    <div class="stat-icon">👥</div>
+    <div class="stat-info">
+      <div class="stat-label">CREW READINESS</div>
+      <div class="stat-label-he">ערכות צוות ומוכנות</div>
+      <div class="stat-val sv-white" id="stat-readiness">—</div>
+    </div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-icon">🛡️</div>
+    <div class="stat-info">
+      <div class="stat-label">SYSTEMS STATUS</div>
+      <div class="stat-label-he">מצב מערכות</div>
+      <div class="stat-val" id="stat-systems">—</div>
+    </div>
+  </div>
+  <div class="stat-block">
+    <div class="stat-icon">📋</div>
+    <div class="stat-info">
+      <div class="stat-label">CHECKLIST STATUS</div>
+      <div class="stat-label-he">סטטוס צ'ק ליסט</div>
+      <div class="stat-val sv-red" id="stat-checklist">0/0</div>
+    </div>
   </div>
 </div>
 
-<main class="container">
+<!-- ===== OPERATOR + ACTIONS BAR ===== -->
+<div class="action-bar z1">
+  <span class="op-label">מבצע:</span>
+  <input type="text" id="op-name" class="op-input" placeholder="הזן שם...">
 
-  <!-- ===== Dashboard ===== -->
-  <section class="dashboard">
-    <div class="stat-card">
-      <div class="stat-label">סה"כ משימות</div>
-      <div class="stat-value" id="stat-total">0</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">משימות שהושלמו</div>
-      <div class="stat-value" id="stat-done">0</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">אחוז ביצוע</div>
-      <div class="stat-value" id="stat-percent">0%</div>
-      <div class="progress-bar-outer"><div class="progress-bar-fill" id="progress-bar-fill"></div></div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">קטגוריות</div>
-      <div class="stat-value" id="stat-categories">0</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">תאריך עדכון</div>
-      <div class="stat-value" id="stat-updated" style="font-size:.9rem">—</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-label">סטטוס משימה</div>
-      <div class="stat-value" id="mission-status">—</div>
-    </div>
-  </section>
+  <div class="ab-sep"></div>
 
-  <!-- ===== Toolbar ===== -->
-  <section class="toolbar">
-    <button class="btn btn-primary" id="add-category-btn">+ קטגוריה חדשה</button>
-    <button class="btn btn-danger" id="weekly-reset-btn">↻ איפוס שבועי</button>
-    <button class="btn" id="export-pdf-btn">⬇ ייצוא PDF</button>
-    <div class="spacer"></div>
-    <div class="search-box">
-      <input type="text" id="search-input" placeholder="חיפוש משימות...">
-    </div>
-    <div class="filter-group">
-      <button class="filter-btn active" data-filter="all">הכל</button>
-      <button class="filter-btn" data-filter="done">בוצע</button>
-      <button class="filter-btn" data-filter="pending">לא בוצע</button>
-    </div>
-  </section>
+  <button class="btn btn-commit" id="btn-commit">
+    <span id="commit-icon">💾</span>
+    <span>שמירה ועדכון</span>
+  </button>
 
-  <!-- ===== Categories Grid ===== -->
-  <section class="categories-grid" id="categories-grid"></section>
+  <button class="btn btn-refresh" id="btn-refresh">
+    <span id="refresh-icon">↻</span>
+    <span>רענון נתונים</span>
+  </button>
+
+  <span id="sync-status-pill" class="sync-pill local">
+    <span class="sync-dot2"></span>
+    <span id="sync-label">מקומי</span>
+  </span>
+
+  <div class="ab-spacer"></div>
+
+  <div class="search-wrap">
+    <span class="search-icon">🔍</span>
+    <input type="text" id="search-input" class="search-input" placeholder="חיפוש משימות...">
+  </div>
+
+  <div class="filter-group">
+    <button class="fbtn active" data-filter="all">הכל</button>
+    <button class="fbtn" data-filter="done">בוצע</button>
+    <button class="fbtn" data-filter="pending">ממתין</button>
+  </div>
+
+  <button class="btn btn-reset" id="btn-pdf">⬇ PDF</button>
+</div>
+
+<!-- ===== MAIN CONTENT ===== -->
+<main class="container z1">
+
+  <!-- Category overview -->
+  <div class="section-hd">
+    <div class="section-hd-line"></div>
+    <div class="section-hd-title">CHECKLIST CATEGORIES</div>
+    <div class="section-hd-line rev"></div>
+  </div>
+  <div class="cat-overview" id="cat-overview"></div>
+
+  <!-- Toolbar (add category, reset) -->
+  <div class="toolbar-row">
+    <button class="btn btn-add" id="btn-add-cat">+ קטגוריה חדשה</button>
+    <button class="btn btn-reset" id="btn-weekly-reset">↻ איפוס שבועי</button>
+  </div>
+
+  <!-- Detailed checklist -->
+  <div class="section-hd">
+    <div class="section-hd-line"></div>
+    <div class="section-hd-title">DETAILED CHECKLIST</div>
+    <div class="section-hd-line rev"></div>
+  </div>
+  <div class="checklist-grid" id="checklist-grid"></div>
 
 </main>
 
-<footer class="site-footer">
-  W837J Naval Vessel Checklist System &middot; Vanilla HTML/CSS/JS &middot; GitHub Pages Ready
+<!-- ===== FOOTER ===== -->
+<footer class="site-footer z1">
+  <div class="footer-inner">
+    <div>
+      <div class="footer-info-label">מידע צ'ק ליסט CHECKLIST INFO</div>
+      <div class="footer-info-row">
+        <div class="footer-kv"><span class="fk">Created</span><span class="fv" id="ft-created">—</span></div>
+        <div class="footer-kv"><span class="fk">Last Updated</span><span class="fv" id="ft-updated">—</span></div>
+        <div class="footer-kv"><span class="fk">Version</span><span class="fv">1.0</span></div>
+      </div>
+    </div>
+    <div>
+      <div class="footer-info-label">תחתימות אישור APPROVAL SIGNATURES</div>
+      <div class="footer-sigs">
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-name">Commanding Officer<br>מפקד הספינה</div>
+        </div>
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-name">Chief Engineer<br>מהנדס ראשי</div>
+        </div>
+        <div class="sig-col">
+          <div class="sig-line"></div>
+          <div class="sig-name">Operations Officer<br>קצין מטפל</div>
+        </div>
+      </div>
+    </div>
+    <div class="mission-status-box">
+      <div class="ms-label">MISSION STATUS</div>
+      <div class="ms-label-he">סטטוס משימה</div>
+      <div class="ms-val" id="ft-ms-en">—</div>
+      <div class="ms-val-he" id="ft-ms-he">—</div>
+    </div>
+  </div>
 </footer>
 
-<!-- ===== Modal & Toast Roots ===== -->
+<!-- ===== MODAL ROOT ===== -->
 <div id="modal-root"></div>
-<div id="toast-container"></div>
 
-<!-- ===== Initial data (seed) ===== -->
-<script id="jsonData" type="application/json">
+<!-- ===== TOASTS ===== -->
+<div id="toasts"></div>
+
+<!-- ===== INITIAL DATA ===== -->
+<script id="seed-data" type="application/json">
 {
   "lastResetDate": "2026-06-23",
   "categories": [
     {
-      "id": 1, "name": "חרטום", "icon": "🛡️",
+      "id": 1, "name": "חרטום", "nameEn": "BOW SECTION", "icon": "🛡️",
       "tasks": [
         { "id": 101, "title": "סידור ארונות" },
         { "id": 102, "title": "ניקיון אבק- מסילות בקיר, מנורות, מעל הארונות, מיזוג אוויר" },
@@ -487,7 +1111,7 @@ input, select { font-family: inherit; }
       ]
     },
     {
-      "id": 2, "name": "ירכתיים", "icon": "⚙️",
+      "id": 2, "name": "ירכתיים", "nameEn": "STERN SECTION", "icon": "⚙️",
       "tasks": [
         { "id": 201, "title": "סידור ארונות" },
         { "id": 202, "title": "אבק- מסילות בקיר, מנורות, מעל ארונות, כסופים, שקעים" },
@@ -501,7 +1125,7 @@ input, select { font-family: inherit; }
       ]
     },
     {
-      "id": 3, "name": "שירותים", "icon": "⚡",
+      "id": 3, "name": "שירותים", "nameEn": "SANITATION", "icon": "⚡",
       "tasks": [
         { "id": 301, "title": "ניקיון כיור" },
         { "id": 302, "title": "פינוי מברשות ומשחות שיניים" },
@@ -517,7 +1141,7 @@ input, select { font-family: inherit; }
       ]
     },
     {
-      "id": 4, "name": "כללי - פנים ספינה", "icon": "🎯",
+      "id": 4, "name": "כללי - פנים", "nameEn": "INTERIOR", "icon": "🎯",
       "tasks": [
         { "id": 401, "title": "דלתות 6 ידיות (WD/אקונומיקה)" },
         { "id": 402, "title": "מאחורי המדרגות" },
@@ -532,7 +1156,7 @@ input, select { font-family: inherit; }
       ]
     },
     {
-      "id": 5, "name": "מס", "icon": "📡",
+      "id": 5, "name": "מס", "nameEn": "CIC / MAS", "icon": "📡",
       "tasks": [
         { "id": 501, "title": "מדרגות מס-מיק" },
         { "id": 502, "title": "כוך מדרגות" },
@@ -553,7 +1177,7 @@ input, select { font-family: inherit; }
       ]
     },
     {
-      "id": 6, "name": "גשר", "icon": "⚓",
+      "id": 6, "name": "גשר", "nameEn": "BRIDGE", "icon": "⚓",
       "tasks": [
         { "id": 601, "title": "פינוי כלל החצקונים" },
         { "id": 602, "title": "הורדת תחמושת" },
@@ -576,7 +1200,7 @@ input, select { font-family: inherit; }
       ]
     },
     {
-      "id": 7, "name": "סיפון", "icon": "📦",
+      "id": 7, "name": "סיפון", "nameEn": "DECK", "icon": "📦",
       "tasks": [
         { "id": 701, "title": "ניקיון מוצב ירכתיים- מוצב עצמו+ תרמילים שרשורים+ חצ'קון ירכתיים" },
         { "id": 702, "title": "ניפוח סג+ סידור" },
@@ -595,669 +1219,668 @@ input, select { font-family: inherit; }
 }
 </script>
 
-<!-- ===== Config (GitHub Sync — optional, enables true live sync for all visitors) ===== -->
+<!-- ===== CONFIG ===== -->
 <script>
-// ============================================================
-// CONFIG — הגדרות סנכרון GitHub
-// ============================================================
-// כדי שכל מי שפותח את הריפוזיטורי יראה עדכון חי בזמן אמת,
-// יש למלא כאן Personal Access Token עם הרשאת Contents:Read&Write
-// על הריפו הזה בלבד (Fine-grained PAT), בעל owner/repo תואמים.
-// אם משאירים token ריק — המערכת עובדת במצב מקומי (כל מכשיר
-// שומר את הנתונים שלו בנפרד בדפדפן, ללא סנכרון בין משתמשים).
-//
-// אזהרת אבטחה: טוקן המוזן כאן גלוי לכל מי שצופה בקוד המקור.
-// מומלץ טוקן עם הרשאות מצומצמות בלבד, ולסובב (Rotate) מעת לעת.
-// ============================================================
+/* ======================================================================
+   CONFIG — GitHub Sync (optional for real-time multi-user sync)
+   ======================================================================
+   מלא token + owner + repo לסנכרון חי בין כל משתמשי הריפוזיטורי.
+   השאר ריק לעבודה מקומית (כל דפדפן שומר לעצמו).
+
+   אזהרת אבטחה: הטוקן גלוי במקור הדף. השתמש ב-Fine-grained PAT
+   עם הרשאת Contents:Read&Write בלבד על ריפו זה, וסובב אותו מעת לעת.
+   ====================================================================== */
 const CONFIG = {
-  token: "",                       // GitHub Personal Access Token (השאר ריק למצב מקומי)
-  owner: "",                       // שם המשתמש/הארגון ב-GitHub
-  repo: "",                        // שם ה-Repository
-  branch: "main",
-  dataPath: "data/checklist.json", // קובץ המצב המשותף
-  autoRefreshSeconds: 8,
+  token:             "",       // GitHub Personal Access Token
+  owner:             "",       // שם משתמש/ארגון ב-GitHub
+  repo:              "",       // שם ה-Repository
+  branch:            "main",
+  dataPath:          "data/checklist.json",
+  autoRefreshSec:    10,       // כל כמה שניות לרענן אוטומטית
   resetIntervalDays: 7
 };
 </script>
 
-<!-- ===== Scripts ===== -->
+<!-- ===== MAIN SCRIPT ===== -->
 <script>
-(function () {
+(function W837J() {
 "use strict";
 
-/* ============================================================
-   GitHubSync — שכבת תקשורת מול GitHub Contents API
-   ============================================================ */
-const GitHubSync = (() => {
-  let sha = null;
+/* ── Utilities ─────────────────────────────────────── */
+function qs(sel, ctx) { return (ctx || document).querySelector(sel); }
+function qsa(sel, ctx) { return [...(ctx || document).querySelectorAll(sel)]; }
 
-  function isEnabled() {
-    return !!(CONFIG.token && CONFIG.owner && CONFIG.repo);
+function todayStr() {
+  return new Date().toISOString().slice(0, 10);
+}
+function nowStr() {
+  return new Date().toLocaleString("he-IL", { day:"2-digit", month:"2-digit", year:"2-digit", hour:"2-digit", minute:"2-digit" });
+}
+function esc(s) {
+  return String(s || "")
+    .replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+}
+
+/* ── Clock ─────────────────────────────────────────── */
+function startClock() {
+  const el = document.getElementById("tb-clock");
+  function tick() {
+    const now = new Date();
+    el.textContent = now.toLocaleTimeString("he-IL", { hour:"2-digit", minute:"2-digit", second:"2-digit" });
   }
+  tick();
+  setInterval(tick, 1000);
+}
+
+/* ── Toast ─────────────────────────────────────────── */
+function toast(msg, type = "info") {
+  const container = document.getElementById("toasts");
+  const el = document.createElement("div");
+  el.className = `toast t-${type}`;
+  el.textContent = msg;
+  container.appendChild(el);
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => el.classList.add("show"));
+  });
+  setTimeout(() => {
+    el.classList.remove("show");
+    setTimeout(() => el.remove(), 350);
+  }, 3500);
+}
+
+/* ── Modal ─────────────────────────────────────────── */
+function modal({ title, body, confirmText = "אישור", danger = false, onConfirm }) {
+  const root = document.getElementById("modal-root");
+  const btnCls = danger ? "btn-sm btn-sm-danger" : "btn-sm btn-sm-primary";
+  root.innerHTML = `
+    <div class="overlay" id="_mo">
+      <div class="modal-box">
+        <div class="modal-hd">
+          <h3>${esc(title)}</h3>
+          <button class="modal-close" id="_mc">✕</button>
+        </div>
+        <div class="modal-body">${body}</div>
+        <div class="modal-ft">
+          <button class="btn-sm" id="_mcancel">ביטול</button>
+          <button class="${btnCls}" id="_mok">${esc(confirmText)}</button>
+        </div>
+      </div>
+    </div>`;
+  const overlay = qs("#_mo");
+  requestAnimationFrame(() => requestAnimationFrame(() => overlay.classList.add("show")));
+  function close() {
+    overlay.classList.remove("show");
+    setTimeout(() => { root.innerHTML = ""; }, 220);
+  }
+  qs("#_mc").onclick = close;
+  qs("#_mcancel").onclick = close;
+  overlay.onclick = e => { if (e.target === overlay) close(); };
+  qs("#_mok").onclick = async () => {
+    const result = await onConfirm(overlay);
+    if (result !== false) close();
+  };
+}
+
+/* ── GitHub Sync ───────────────────────────────────── */
+const GH = (() => {
+  let _sha = null;
+
+  function enabled() { return !!(CONFIG.token && CONFIG.owner && CONFIG.repo); }
 
   function apiUrl() {
     return `https://api.github.com/repos/${CONFIG.owner}/${CONFIG.repo}/contents/${CONFIG.dataPath}`;
   }
-
-  async function fetchRemote() {
-    if (!isEnabled()) return null;
-    try {
-      const res = await fetch(`${apiUrl()}?ref=${CONFIG.branch}&t=${Date.now()}`, {
-        headers: {
-          Authorization: `token ${CONFIG.token}`,
-          Accept: "application/vnd.github.v3+json"
-        }
-      });
-      if (res.status === 404) return null; // הקובץ עוד לא קיים
-      if (!res.ok) throw new Error("GitHub fetch failed: " + res.status);
-      const json = await res.json();
-      sha = json.sha;
-      const decoded = decodeURIComponent(escape(atob(json.content)));
-      return JSON.parse(decoded);
-    } catch (err) {
-      console.error("GitHubSync.fetchRemote error", err);
-      return null;
-    }
+  function headers() {
+    return { Authorization: `token ${CONFIG.token}`, Accept: "application/vnd.github.v3+json" };
   }
 
-  async function pushRemote(state) {
-    if (!isEnabled()) return false;
+  async function pull() {
+    if (!enabled()) return null;
+    try {
+      const res = await fetch(`${apiUrl()}?ref=${CONFIG.branch}&_=${Date.now()}`, { headers: headers() });
+      if (res.status === 404) return null;
+      if (!res.ok) throw new Error("HTTP " + res.status);
+      const j = await res.json();
+      _sha = j.sha;
+      return JSON.parse(decodeURIComponent(escape(atob(j.content))));
+    } catch(e) { console.error("GH.pull", e); return null; }
+  }
+
+  async function push(state) {
+    if (!enabled()) return false;
     try {
       const content = btoa(unescape(encodeURIComponent(JSON.stringify(state, null, 2))));
-      const body = {
-        message: `עדכון צ'קליסט — ${new Date().toLocaleString("he-IL")}`,
-        content,
-        branch: CONFIG.branch
-      };
-      if (sha) body.sha = sha;
+      const body = { message: `W837J checklist update — ${nowStr()}`, content, branch: CONFIG.branch };
+      if (_sha) body.sha = _sha;
       const res = await fetch(apiUrl(), {
-        method: "PUT",
-        headers: {
-          Authorization: `token ${CONFIG.token}`,
-          Accept: "application/vnd.github.v3+json"
-        },
-        body: JSON.stringify(body)
+        method: "PUT", headers: headers(), body: JSON.stringify(body)
       });
       if (!res.ok) {
-        // אם ה-sha התיישן (מישהו אחר עדכן קודם) — נטען מחדש ונוותר על הדחיפה הזו
-        if (res.status === 409 || res.status === 422) {
-          await fetchRemote();
-        }
-        throw new Error("GitHub push failed: " + res.status);
+        if (res.status === 409 || res.status === 422) { await pull(); }
+        throw new Error("HTTP " + res.status);
       }
-      const json = await res.json();
-      sha = json.content.sha;
+      const j = await res.json();
+      _sha = j.content.sha;
       return true;
-    } catch (err) {
-      console.error("GitHubSync.pushRemote error", err);
-      return false;
-    }
+    } catch(e) { console.error("GH.push", e); return false; }
   }
 
-  return { isEnabled, fetchRemote, pushRemote };
+  return { enabled, pull, push };
 })();
 
-/* ============================================================
-   ChecklistStore — ניהול המצב (state) + שמירה
-   ============================================================ */
-const ChecklistStore = (() => {
-  let state = null;
-  const LOCAL_KEY = "w837j_checklist_state_v1";
+/* ── Store ─────────────────────────────────────────── */
+const Store = (() => {
+  const KEY = "w837j_v2";
+  let _state = null;
+  let _dirty = false;
 
-  function todayStr() {
-    return new Date().toISOString().slice(0, 10);
+  function operatorName() {
+    return (qs("#op-name").value || "").trim() || localStorage.getItem("w837j_op") || "אנונימי";
   }
 
-  function seedState() {
-    const jsonText = document.getElementById("jsonData").textContent;
-    const seed = JSON.parse(jsonText);
-    seed.categories.forEach(cat => {
+  function _seed() {
+    const raw = JSON.parse(document.getElementById("seed-data").textContent);
+    raw.categories.forEach(cat => {
       cat.tasks.forEach(t => {
-        t.done = !!t.done;
-        t.doneBy = t.doneBy || null;
-        t.doneAt = t.doneAt || null;
+        if (t.done === undefined) t.done = false;
+        if (t.doneBy === undefined) t.doneBy = null;
+        if (t.doneAt === undefined) t.doneAt = null;
       });
     });
-    return seed;
+    return raw;
   }
 
-  function loadLocal() {
-    try {
-      const raw = localStorage.getItem(LOCAL_KEY);
-      return raw ? JSON.parse(raw) : null;
-    } catch {
-      return null;
-    }
+  function _fromLocal() {
+    try { const r = localStorage.getItem(KEY); return r ? JSON.parse(r) : null; } catch { return null; }
   }
-
-  function saveLocal() {
-    try {
-      localStorage.setItem(LOCAL_KEY, JSON.stringify(state));
-    } catch (err) {
-      console.error("saveLocal error", err);
-    }
+  function _toLocal() {
+    try { localStorage.setItem(KEY, JSON.stringify(_state)); } catch(e) { console.warn(e); }
   }
 
   async function load() {
-    if (GitHubSync.isEnabled()) {
-      const remote = await GitHubSync.fetchRemote();
-      state = remote || loadLocal() || seedState();
-      if (!remote) await GitHubSync.pushRemote(state); // יוצר את הקובץ בפעם הראשונה
+    if (GH.enabled()) {
+      const remote = await GH.pull();
+      _state = remote || _fromLocal() || _seed();
+      if (!remote) await GH.push(_state);
     } else {
-      state = loadLocal() || seedState();
+      _state = _fromLocal() || _seed();
     }
   }
 
-  async function persist() {
-    saveLocal();
-    if (GitHubSync.isEnabled()) {
-      await GitHubSync.pushRemote(state);
+  async function commit(silent = false) {
+    _toLocal();
+    if (!GH.enabled()) {
+      if (!silent) toast("שמור מקומית (אין GitHub Token)", "warn");
+      return;
     }
+    setSyncUI("saving");
+    const ok = await GH.push(_state);
+    setSyncUI(ok ? "live" : "local");
+    if (!silent) toast(ok ? "✓ נשמר ועודכן בהצלחה" : "שגיאה בשמירה ל-GitHub", ok ? "success" : "warn");
+    _dirty = false;
   }
 
-  async function refreshFromRemote() {
-    if (!GitHubSync.isEnabled()) return false;
-    const remote = await GitHubSync.fetchRemote();
-    if (!remote) return false;
-    const changed = JSON.stringify(remote) !== JSON.stringify(state);
-    if (changed) {
-      state = remote;
-      saveLocal();
-    }
+  async function refresh() {
+    if (!GH.enabled()) { toast("אין GitHub Token — מצב מקומי בלבד", "warn"); return false; }
+    const remote = await GH.pull();
+    if (!remote) { toast("לא ניתן לטעון מ-GitHub", "warn"); return false; }
+    const changed = JSON.stringify(remote) !== JSON.stringify(_state);
+    if (changed) { _state = remote; _toLocal(); }
     return changed;
   }
 
-  function getState() { return state; }
+  function get() { return _state; }
 
-  function getOperatorName() {
-    const input = document.getElementById("operator-name-input");
-    const name = (input && input.value.trim()) || localStorage.getItem("w837j_operator") || "אנונימי";
-    return name;
-  }
+  function markDirty() { _dirty = true; }
 
   async function toggleTask(catId, taskId) {
-    const cat = state.categories.find(c => c.id === catId);
-    const task = cat && cat.tasks.find(t => t.id === taskId);
-    if (!task) return;
-    task.done = !task.done;
-    if (task.done) {
-      task.doneBy = getOperatorName();
-      task.doneAt = new Date().toLocaleString("he-IL");
-    } else {
-      task.doneBy = null;
-      task.doneAt = null;
-    }
-    await persist();
+    const cat = _state.categories.find(c => c.id === catId);
+    const t = cat && cat.tasks.find(t => t.id === taskId);
+    if (!t) return;
+    t.done = !t.done;
+    t.doneBy = t.done ? operatorName() : null;
+    t.doneAt = t.done ? nowStr() : null;
+    _toLocal();
+    markDirty();
   }
 
-  function addCategory(name) {
-    const id = Date.now();
-    state.categories.push({ id, name, icon: "🗂️", tasks: [] });
-    return persist();
+  function addCat(name, icon) {
+    _state.categories.push({ id: Date.now(), name, nameEn: name.toUpperCase(), icon: icon || "🗂️", tasks: [] });
+    _toLocal(); markDirty();
   }
-
-  function editCategory(catId, name) {
-    const cat = state.categories.find(c => c.id === catId);
-    if (cat) cat.name = name;
-    return persist();
+  function editCat(id, name) {
+    const c = _state.categories.find(c => c.id === id);
+    if (c) { c.name = name; _toLocal(); markDirty(); }
   }
-
-  function deleteCategory(catId) {
-    state.categories = state.categories.filter(c => c.id !== catId);
-    return persist();
+  function deleteCat(id) {
+    _state.categories = _state.categories.filter(c => c.id !== id);
+    _toLocal(); markDirty();
   }
-
   function addTask(catId, title) {
-    const cat = state.categories.find(c => c.id === catId);
-    if (!cat) return;
-    const id = Date.now();
-    cat.tasks.push({ id, title, done: false, doneBy: null, doneAt: null });
-    return persist();
+    const c = _state.categories.find(c => c.id === catId);
+    if (c) { c.tasks.push({ id: Date.now(), title, done: false, doneBy: null, doneAt: null }); _toLocal(); markDirty(); }
   }
-
   function editTask(catId, taskId, title) {
-    const cat = state.categories.find(c => c.id === catId);
-    const task = cat && cat.tasks.find(t => t.id === taskId);
-    if (task) task.title = title;
-    return persist();
+    const c = _state.categories.find(c => c.id === catId);
+    const t = c && c.tasks.find(t => t.id === taskId);
+    if (t) { t.title = title; _toLocal(); markDirty(); }
   }
-
   function deleteTask(catId, taskId) {
-    const cat = state.categories.find(c => c.id === catId);
-    if (!cat) return;
-    cat.tasks = cat.tasks.filter(t => t.id !== taskId);
-    return persist();
+    const c = _state.categories.find(c => c.id === catId);
+    if (c) { c.tasks = c.tasks.filter(t => t.id !== taskId); _toLocal(); markDirty(); }
   }
-
-  function resetAllTasks() {
-    state.categories.forEach(cat => {
-      cat.tasks.forEach(t => {
-        t.done = false;
-        t.doneBy = null;
-        t.doneAt = null;
-      });
-    });
-    state.lastResetDate = todayStr();
-    return persist();
+  function resetAll() {
+    _state.categories.forEach(cat => cat.tasks.forEach(t => { t.done=false; t.doneBy=null; t.doneAt=null; }));
+    _state.lastResetDate = todayStr();
+    _toLocal(); markDirty();
   }
-
   function checkWeeklyReset() {
-    if (!state.lastResetDate) {
-      state.lastResetDate = todayStr();
-      return false;
-    }
-    const last = new Date(state.lastResetDate);
-    const now = new Date();
-    const diffDays = (now - last) / (1000 * 60 * 60 * 24);
-    if (diffDays >= (CONFIG.resetIntervalDays || 7)) {
-      resetAllTasks();
-      return true;
-    }
+    if (!_state.lastResetDate) { _state.lastResetDate = todayStr(); return false; }
+    const diff = (Date.now() - new Date(_state.lastResetDate)) / 86400000;
+    if (diff >= (CONFIG.resetIntervalDays || 7)) { resetAll(); return true; }
     return false;
   }
+  function isDirty() { return _dirty; }
 
-  return {
-    load, getState, toggleTask, addCategory, editCategory, deleteCategory,
-    addTask, editTask, deleteTask, resetAllTasks, checkWeeklyReset, todayStr,
-    refreshFromRemote
-  };
+  return { load, get, commit, refresh, toggleTask, addCat, editCat, deleteCat, addTask, editTask, deleteTask, resetAll, checkWeeklyReset, isDirty, operatorName };
 })();
 
-/* ============================================================
-   UI — רינדור וממשק
-   ============================================================ */
-const UI = (() => {
-  let searchTerm = "";
-  let filter = "all";
+/* ── Sync UI Helpers ───────────────────────────────── */
+function setSyncUI(state) {
+  const pill = document.getElementById("sync-status-pill");
+  const label = document.getElementById("sync-label");
+  pill.className = "sync-pill " + state;
+  if (state === "live")   { label.textContent = "סנכרון חי פעיל"; }
+  if (state === "local")  { label.textContent = "מקומי בלבד"; }
+  if (state === "saving") { label.textContent = "שומר..."; }
+}
 
-  function setSearch(term) { searchTerm = term.toLowerCase(); }
-  function setFilter(f) { filter = f; }
+/* ── Filter / Search State ─────────────────────────── */
+let _filter = "all";
+let _search = "";
 
-  function Toast(message, type = "info") {
-    const container = document.getElementById("toast-container");
-    const el = document.createElement("div");
-    el.className = `toast toast-${type}`;
-    el.textContent = message;
-    container.appendChild(el);
-    requestAnimationFrame(() => el.classList.add("show"));
-    setTimeout(() => {
-      el.classList.remove("show");
-      setTimeout(() => el.remove(), 300);
-    }, 3000);
-  }
+/* ── Render ────────────────────────────────────────── */
+function render() {
+  const state = Store.get();
+  renderStats(state);
+  renderCatOverview(state);
+  renderChecklist(state);
+  renderFooter(state);
+}
 
-  function Modal({ title, bodyHTML, confirmText = "אישור", danger = false, onConfirm }) {
-    const root = document.getElementById("modal-root");
-    root.innerHTML = `
-      <div class="modal-overlay" id="active-modal">
-        <div class="modal-box">
-          <div class="modal-header">
-            <strong>${title}</strong>
-            <button class="modal-close" id="modal-close-btn">✕</button>
-          </div>
-          <div class="modal-body">${bodyHTML}</div>
-          <div class="modal-footer">
-            <button class="btn btn-ghost" id="modal-cancel-btn">ביטול</button>
-            <button class="btn ${danger ? "btn-danger" : "btn-primary"}" id="modal-confirm-btn">${confirmText}</button>
-          </div>
+function renderStats(state) {
+  let total = 0, done = 0;
+  state.categories.forEach(c => { total += c.tasks.length; done += c.tasks.filter(t => t.done).length; });
+  const pct = total ? Math.round(done / total * 100) : 0;
+
+  document.getElementById("stat-readiness").textContent = pct + "%";
+  document.getElementById("stat-readiness").className = "stat-val " + (pct===100 ? "sv-green" : pct>50 ? "sv-amber" : "sv-red");
+
+  const sysEl = document.getElementById("stat-systems");
+  sysEl.textContent = pct === 100 ? "OPERATIONAL" : done > 0 ? "IN PROGRESS" : "STANDBY";
+  sysEl.className = "stat-val " + (pct===100 ? "sv-green" : done>0 ? "sv-amber" : "sv-red");
+
+  document.getElementById("stat-checklist").textContent = done + "/" + total;
+  document.getElementById("stat-checklist").className = "stat-val " + (pct===100 ? "sv-green" : "sv-red");
+}
+
+function renderCatOverview(state) {
+  const grid = document.getElementById("cat-overview");
+  grid.innerHTML = "";
+  state.categories.forEach((cat, i) => {
+    const done = cat.tasks.filter(t => t.done).length;
+    const total = cat.tasks.length;
+    const complete = total > 0 && done === total;
+    const div = document.createElement("div");
+    div.className = "cat-card" + (complete ? " complete" : "");
+    div.title = cat.name;
+    div.dataset.catId = cat.id;
+    div.innerHTML = `
+      <div class="cat-num">${String(i+1).padStart(2,"0")}</div>
+      <div class="cat-icon">${cat.icon || "🗂️"}</div>
+      <div class="cat-name-en">${esc(cat.nameEn || "")}</div>
+      <div class="cat-name-he">${esc(cat.name)}</div>
+      <div class="cat-prog">${done}/${total}</div>`;
+    div.onclick = () => {
+      const el = document.querySelector(`.cl-card[data-cat-id="${cat.id}"]`);
+      if (el) el.scrollIntoView({ behavior:"smooth", block:"start" });
+    };
+    grid.appendChild(div);
+  });
+}
+
+function taskVisible(task) {
+  if (_filter === "done" && !task.done) return false;
+  if (_filter === "pending" && task.done) return false;
+  if (_search && !task.title.toLowerCase().includes(_search)) return false;
+  return true;
+}
+
+function renderChecklist(state) {
+  const grid = document.getElementById("checklist-grid");
+  grid.innerHTML = "";
+
+  state.categories.forEach((cat, idx) => {
+    const visible = cat.tasks.filter(taskVisible);
+    if ((_search || _filter !== "all") && visible.length === 0) return;
+
+    const done = cat.tasks.filter(t => t.done).length;
+    const total = cat.tasks.length;
+    const pct = total ? Math.round(done / total * 100) : 0;
+    const complete = total > 0 && done === total;
+
+    const card = document.createElement("div");
+    card.className = "cl-card" + (complete ? " complete" : "");
+    card.dataset.catId = cat.id;
+
+    const tasksHTML = ((_search || _filter !== "all") ? visible : cat.tasks).map(t => taskHTML(cat.id, t)).join("");
+
+    card.innerHTML = `
+      <div class="cl-card-head">
+        <div class="cl-card-title">
+          <span class="cl-card-num">${String(idx+1).padStart(2,"0")}</span>
+          <span class="cl-card-icon">${cat.icon||"🗂️"}</span>
+          <span class="cl-card-name">${esc(cat.name)}</span>
         </div>
-      </div>`;
-    const overlay = document.getElementById("active-modal");
-    requestAnimationFrame(() => overlay.classList.add("show"));
+        <span class="cl-card-cnt">${done}/${total}</span>
+        <div class="cl-card-acts">
+          <button class="btn-icon edit-cat-btn" data-cat="${cat.id}" title="עריכה">✎</button>
+          <button class="btn-icon delete-cat-btn" data-cat="${cat.id}" title="מחיקה">🗑</button>
+        </div>
+      </div>
+      <div class="cl-progress"><div class="cl-progress-fill" style="width:${pct}%"></div></div>
+      <ul class="task-list">${tasksHTML}</ul>
+      <button class="btn-add-task" data-cat="${cat.id}">＋ הוסף משימה</button>`;
+    grid.appendChild(card);
+  });
 
-    function close() {
-      overlay.classList.remove("show");
-      setTimeout(() => { root.innerHTML = ""; }, 200);
+  if (!grid.children.length) {
+    grid.innerHTML = `<div class="cl-card" style="padding:20px;text-align:center;color:var(--text3)">לא נמצאו משימות תואמות</div>`;
+  }
+}
+
+function taskHTML(catId, t) {
+  const meta = t.done && t.doneBy
+    ? `<span class="task-meta"><span>ביצע:</span><b>${esc(t.doneBy)}</b>${t.doneAt ? `<span class="dot">·</span><span>${esc(t.doneAt)}</span>` : ""}</span>`
+    : "";
+  return `
+    <li class="task-item${t.done?" done":""}" data-task="${t.id}">
+      <label class="cb-wrap" title="${t.done?"סמן כלא בוצע":"סמן כבוצע"}">
+        <input type="checkbox" class="cb-real task-cb" data-cat="${catId}" data-task="${t.id}"${t.done?" checked":""}>
+        <span class="cb-visual"></span>
+      </label>
+      <div class="task-info">
+        <div class="task-row">
+          <span class="task-title-he">${esc(t.title)}</span>
+          <span class="task-status ${t.done?"status-done":"status-pending"}">${t.done?"DONE":"PENDING"}</span>
+        </div>
+        ${meta}
+      </div>
+      <div class="task-acts">
+        <button class="btn-icon edit-task-btn" data-cat="${catId}" data-task="${t.id}" title="עריכה">✎</button>
+        <button class="btn-icon delete-task-btn" data-cat="${catId}" data-task="${t.id}" title="מחיקה">🗑</button>
+      </div>
+    </li>`;
+}
+
+function renderFooter(state) {
+  let total = 0, done = 0;
+  state.categories.forEach(c => { total += c.tasks.length; done += c.tasks.filter(t => t.done).length; });
+  const pct = total ? Math.round(done / total * 100) : 0;
+
+  document.getElementById("ft-created").textContent = state.lastResetDate || todayStr();
+  document.getElementById("ft-updated").textContent = todayStr();
+
+  const enEl = document.getElementById("ft-ms-en");
+  const heEl = document.getElementById("ft-ms-he");
+  if (pct === 100) {
+    enEl.textContent = "READY"; enEl.className = "ms-val ms-ready";
+    heEl.textContent = "מוכן"; heEl.className = "ms-val-he ms-ready";
+  } else {
+    enEl.textContent = "NOT READY"; enEl.className = "ms-val ms-notready";
+    heEl.textContent = "לא מוכן"; heEl.className = "ms-val-he ms-notready";
+  }
+}
+
+/* ── Event Bindings ────────────────────────────────── */
+function bindEvents() {
+
+  /* Checkbox toggle — must use change event on grid */
+  document.getElementById("checklist-grid").addEventListener("change", async e => {
+    const cb = e.target;
+    if (!cb.classList.contains("task-cb")) return;
+    const catId = +cb.dataset.cat;
+    const taskId = +cb.dataset.task;
+    const li = cb.closest(".task-item");
+    if (li) li.style.opacity = ".5";
+    await Store.toggleTask(catId, taskId);
+    render();
+  });
+
+  /* Grid click delegation (edit/delete/add) */
+  document.getElementById("checklist-grid").addEventListener("click", e => {
+    const btn = e.target.closest("button");
+    if (!btn) return;
+
+    if (btn.classList.contains("edit-cat-btn")) {
+      openEditCat(+btn.dataset.cat);
+    } else if (btn.classList.contains("delete-cat-btn")) {
+      openDeleteCat(+btn.dataset.cat);
+    } else if (btn.classList.contains("btn-add-task")) {
+      openAddTask(+btn.dataset.cat);
+    } else if (btn.classList.contains("edit-task-btn")) {
+      openEditTask(+btn.dataset.cat, +btn.dataset.task);
+    } else if (btn.classList.contains("delete-task-btn")) {
+      openDeleteTask(+btn.dataset.cat, +btn.dataset.task);
     }
+  });
 
-    document.getElementById("modal-close-btn").addEventListener("click", close);
-    document.getElementById("modal-cancel-btn").addEventListener("click", close);
-    overlay.addEventListener("click", e => { if (e.target === overlay) close(); });
-    document.getElementById("modal-confirm-btn").addEventListener("click", async () => {
-      const result = await onConfirm(overlay);
-      if (result !== false) close();
-    });
-  }
+  /* Operator name persistence */
+  document.getElementById("op-name").addEventListener("change", e => {
+    localStorage.setItem("w837j_op", e.target.value.trim());
+  });
 
-  function escapeHTML(str) {
-    return String(str)
-      .replace(/&/g, "&amp;")
-      .replace(/</g, "&lt;")
-      .replace(/>/g, "&gt;")
-      .replace(/"/g, "&quot;");
-  }
+  /* COMMIT */
+  document.getElementById("btn-commit").addEventListener("click", async () => {
+    const btn = document.getElementById("btn-commit");
+    btn.disabled = true;
+    document.getElementById("commit-icon").textContent = "⏳";
+    await Store.commit();
+    document.getElementById("commit-icon").textContent = "💾";
+    btn.disabled = false;
+  });
 
-  function taskMatchesFilters(task) {
-    if (filter === "done" && !task.done) return false;
-    if (filter === "pending" && task.done) return false;
-    if (searchTerm && !task.title.toLowerCase().includes(searchTerm)) return false;
-    return true;
-  }
-
-  function renderCategories(state) {
-    const grid = document.getElementById("categories-grid");
-    grid.innerHTML = "";
-
-    state.categories.forEach(cat => {
-      const visibleTasks = cat.tasks.filter(taskMatchesFilters);
-      if ((searchTerm || filter !== "all") && visibleTasks.length === 0) return;
-
-      const doneCount = cat.tasks.filter(t => t.done).length;
-      const total = cat.tasks.length;
-      const pct = total ? Math.round((doneCount / total) * 100) : 0;
-
-      const card = document.createElement("div");
-      card.className = "card";
-      card.innerHTML = `
-        <div class="card-header">
-          <div class="card-title-wrap">
-            <span class="card-title">${cat.icon || "🗂️"} ${escapeHTML(cat.name)}</span>
-            <span class="card-progress">${doneCount}/${total}</span>
-          </div>
-          <div class="card-actions">
-            <button class="icon-btn edit-cat-btn" data-cat="${cat.id}" title="עריכת קטגוריה">✎</button>
-            <button class="icon-btn delete-cat-btn" data-cat="${cat.id}" title="מחיקת קטגוריה">🗑</button>
-          </div>
-        </div>
-        <div class="card-progress-bar"><div class="card-progress-fill" style="width:${pct}%"></div></div>
-        <ul class="task-list">
-          ${visibleTasks.map(t => taskItemHTML(cat.id, t)).join("")}
-        </ul>
-        <button class="btn-add-task" data-cat="${cat.id}">+ הוספת משימה</button>
-      `;
-      grid.appendChild(card);
-    });
-
-    if (!grid.children.length) {
-      grid.innerHTML = `<div class="card" style="text-align:center;color:var(--text-dim)">לא נמצאו משימות תואמות</div>`;
-    }
-  }
-
-  function taskItemHTML(catId, task) {
-    return `
-      <li class="task-item ${task.done ? "completed" : ""}" data-task="${task.id}">
-        <div class="task-checkbox-wrap">
-          <input type="checkbox" class="task-checkbox" data-cat="${catId}" data-task="${task.id}" ${task.done ? "checked" : ""}>
-          <span class="checkmark"></span>
-        </div>
-        <div class="task-info">
-          <div class="task-title">${escapeHTML(task.title)}</div>
-          <div class="task-meta">
-            <span class="task-status-pill ${task.done ? "done" : "pending"}">${task.done ? "בוצעה" : "לא בוצעה"}</span>
-            ${task.done && task.doneBy ? `<span class="task-owner">ע״י <b>${escapeHTML(task.doneBy)}</b>${task.doneAt ? " · " + escapeHTML(task.doneAt) : ""}</span>` : ""}
-          </div>
-        </div>
-        <div class="task-actions">
-          <button class="icon-btn edit-task-btn" data-cat="${catId}" data-task="${task.id}" title="עריכה">✎</button>
-          <button class="icon-btn delete-task-btn" data-cat="${catId}" data-task="${task.id}" title="מחיקה">🗑</button>
-        </div>
-      </li>`;
-  }
-
-  function renderDashboard(state) {
-    let total = 0, done = 0;
-    state.categories.forEach(c => {
-      total += c.tasks.length;
-      done += c.tasks.filter(t => t.done).length;
-    });
-    const pct = total ? Math.round((done / total) * 100) : 0;
-
-    document.getElementById("stat-total").textContent = total;
-    document.getElementById("stat-done").textContent = done;
-    document.getElementById("stat-percent").textContent = pct + "%";
-    document.getElementById("stat-categories").textContent = state.categories.length;
-    document.getElementById("stat-updated").textContent = state.lastResetDate || "—";
-    document.getElementById("progress-bar-fill").style.width = pct + "%";
-
-    const missionEl = document.getElementById("mission-status");
-    if (pct === 100) {
-      missionEl.textContent = "מוכן";
-      missionEl.className = "stat-value mission-ready";
+  /* REFRESH */
+  document.getElementById("btn-refresh").addEventListener("click", async () => {
+    const icon = document.getElementById("refresh-icon");
+    icon.classList.add("spinning");
+    const changed = await Store.refresh();
+    icon.classList.remove("spinning");
+    if (changed) {
+      render();
+      toast("✓ נתונים עודכנו בהצלחה", "success");
     } else {
-      missionEl.textContent = "לא מוכן";
-      missionEl.className = "stat-value mission-not-ready";
+      toast("הנתונים כבר עדכניים", "info");
     }
-  }
+  });
 
-  function renderSyncStatus() {
-    const dot = document.getElementById("sync-dot");
-    const text = document.getElementById("sync-text");
-    if (GitHubSync.isEnabled()) {
-      dot.className = "sync-dot live";
-      text.textContent = "סנכרון חי פעיל — כל המשתמשים רואים עדכון בזמן אמת";
-    } else {
-      dot.className = "sync-dot local";
-      text.textContent = "מצב מקומי בלבד (אין GitHub Token) — נא להגדיר ב-CONFIG לסנכרון חי";
-    }
-  }
+  /* Search */
+  document.getElementById("search-input").addEventListener("input", e => {
+    _search = e.target.value.trim().toLowerCase();
+    renderChecklist(Store.get());
+  });
 
-  function renderAll(state) {
-    renderDashboard(state);
-    renderCategories(state);
-    renderSyncStatus();
-  }
+  /* Filter */
+  qsa(".fbtn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      qsa(".fbtn").forEach(b => b.classList.remove("active"));
+      btn.classList.add("active");
+      _filter = btn.dataset.filter;
+      renderChecklist(Store.get());
+    });
+  });
 
-  function exportPDF() {
-    document.body.classList.add("print-mode");
+  /* Add category */
+  document.getElementById("btn-add-cat").addEventListener("click", () => {
+    modal({
+      title: "קטגוריה חדשה",
+      body: `<input id="_mn" class="m-input" placeholder="שם הקטגוריה" autofocus>`,
+      confirmText: "הוספה",
+      onConfirm: root => {
+        const name = (qs("#_mn", root).value || "").trim();
+        if (!name) return false;
+        Store.addCat(name);
+        render();
+        toast(`קטגוריה "${name}" נוספה`, "success");
+      }
+    });
+  });
+
+  /* Weekly reset */
+  document.getElementById("btn-weekly-reset").addEventListener("click", () => {
+    modal({
+      title: "איפוס שבועי",
+      body: `<p>האם לאפס את כל המשימות בכל הקטגוריות?</p>`,
+      confirmText: "איפוס", danger: true,
+      onConfirm: async () => {
+        Store.resetAll();
+        await Store.commit(true);
+        render();
+        toast("בוצע איפוס שבועי", "warn");
+      }
+    });
+  });
+
+  /* PDF */
+  document.getElementById("btn-pdf").addEventListener("click", () => {
     window.print();
-    setTimeout(() => document.body.classList.remove("print-mode"), 500);
-  }
+  });
+}
 
-  return { Toast, Modal, renderAll, renderCategories, setSearch, setFilter, exportPDF };
-})();
+/* ── Modal helpers ─────────────────────────────────── */
+function openEditCat(catId) {
+  const cat = Store.get().categories.find(c => c.id === catId);
+  if (!cat) return;
+  modal({
+    title: "עריכת קטגוריה",
+    body: `<input id="_mn" class="m-input" value="${esc(cat.name)}">`,
+    confirmText: "שמירה",
+    onConfirm: root => {
+      const name = (qs("#_mn", root).value || "").trim();
+      if (!name) return false;
+      Store.editCat(catId, name);
+      render();
+      toast("קטגוריה עודכנה", "success");
+    }
+  });
+}
 
-/* ============================================================
-   App — אתחול ואירועים
-   ============================================================ */
-let refreshTimer = null;
+function openDeleteCat(catId) {
+  const cat = Store.get().categories.find(c => c.id === catId);
+  if (!cat) return;
+  modal({
+    title: "מחיקת קטגוריה",
+    body: `<p>האם למחוק את "<strong>${esc(cat.name)}</strong>" וכל משימותיה?</p>`,
+    confirmText: "מחיקה", danger: true,
+    onConfirm: () => {
+      Store.deleteCat(catId);
+      render();
+      toast("קטגוריה נמחקה", "warn");
+    }
+  });
+}
 
-document.addEventListener("DOMContentLoaded", init);
+function openAddTask(catId) {
+  modal({
+    title: "הוספת משימה",
+    body: `<input id="_mt" class="m-input" placeholder="תיאור המשימה" autofocus>`,
+    confirmText: "הוספה",
+    onConfirm: root => {
+      const title = (qs("#_mt", root).value || "").trim();
+      if (!title) return false;
+      Store.addTask(catId, title);
+      render();
+      toast("משימה נוספה", "success");
+    }
+  });
+}
 
+function openEditTask(catId, taskId) {
+  const cat = Store.get().categories.find(c => c.id === catId);
+  const t = cat && cat.tasks.find(t => t.id === taskId);
+  if (!t) return;
+  modal({
+    title: "עריכת משימה",
+    body: `<input id="_mt" class="m-input" value="${esc(t.title)}">`,
+    confirmText: "שמירה",
+    onConfirm: root => {
+      const title = (qs("#_mt", root).value || "").trim();
+      if (!title) return false;
+      Store.editTask(catId, taskId, title);
+      render();
+      toast("משימה עודכנה", "success");
+    }
+  });
+}
+
+function openDeleteTask(catId, taskId) {
+  modal({
+    title: "מחיקת משימה",
+    body: `<p>האם למחוק משימה זו?</p>`,
+    confirmText: "מחיקה", danger: true,
+    onConfirm: () => {
+      Store.deleteTask(catId, taskId);
+      render();
+      toast("משימה נמחקה", "warn");
+    }
+  });
+}
+
+/* ── Auto Refresh ──────────────────────────────────── */
+function startAutoRefresh() {
+  const sec = CONFIG.autoRefreshSec || 10;
+  setInterval(async () => {
+    if (!GH.enabled()) return;
+    const changed = await Store.refresh();
+    if (changed) {
+      render();
+      toast("↻ נתונים עודכנו על-ידי משתמש אחר", "info");
+    }
+    if (Store.checkWeeklyReset()) {
+      render();
+      toast("↻ בוצע איפוס שבועי אוטומטי", "warn");
+    }
+  }, sec * 1000);
+}
+
+/* ── Init ──────────────────────────────────────────── */
 async function init() {
-  bindOperatorInput();
-  bindGlobalActions();
-  bindGridEvents();
+  startClock();
 
-  await ChecklistStore.load();
-  UI.renderAll(ChecklistStore.getState());
+  // Restore operator name
+  const savedOp = localStorage.getItem("w837j_op");
+  if (savedOp) document.getElementById("op-name").value = savedOp;
 
+  // Set sync indicator before load
+  setSyncUI(GH.enabled() ? "saving" : "local");
+
+  await Store.load();
+
+  setSyncUI(GH.enabled() ? "live" : "local");
+
+  render();
+  bindEvents();
   startAutoRefresh();
 
-  if (!GitHubSync.isEnabled()) {
-    UI.Toast("מצב מקומי פעיל (ללא GitHub Token) — שינויים נשמרים בדפדפן הזה בלבד", "warning");
+  if (!GH.enabled()) {
+    toast("מצב מקומי פעיל — הגדר GitHub Token ב-CONFIG לסנכרון חי", "warn");
   } else {
-    UI.Toast("מחובר לסנכרון חי דרך GitHub", "success");
+    toast("✓ מחובר לסנכרון חי", "success");
   }
 }
 
-function bindOperatorInput() {
-  const input = document.getElementById("operator-name-input");
-  const saved = localStorage.getItem("w837j_operator");
-  if (saved) input.value = saved;
-  input.addEventListener("change", () => {
-    localStorage.setItem("w837j_operator", input.value.trim());
-  });
-}
-
-function bindGlobalActions() {
-  document.getElementById("add-category-btn").addEventListener("click", openAddCategoryModal);
-  document.getElementById("weekly-reset-btn").addEventListener("click", openResetModal);
-  document.getElementById("export-pdf-btn").addEventListener("click", () => UI.exportPDF());
-
-  const searchInput = document.getElementById("search-input");
-  searchInput.addEventListener("input", () => {
-    UI.setSearch(searchInput.value.trim());
-    UI.renderCategories(ChecklistStore.getState());
-  });
-
-  document.querySelectorAll(".filter-btn").forEach(btn => {
-    btn.addEventListener("click", () => {
-      document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
-      btn.classList.add("active");
-      UI.setFilter(btn.dataset.filter);
-      UI.renderCategories(ChecklistStore.getState());
-    });
-  });
-}
-
-function bindGridEvents() {
-  const grid = document.getElementById("categories-grid");
-
-  grid.addEventListener("click", e => {
-    const target = e.target;
-    if (target.classList.contains("btn-add-task")) {
-      openAddTaskModal(Number(target.dataset.cat));
-    } else if (target.classList.contains("edit-cat-btn")) {
-      openEditCategoryModal(Number(target.dataset.cat));
-    } else if (target.classList.contains("delete-cat-btn")) {
-      openDeleteCategoryModal(Number(target.dataset.cat));
-    } else if (target.classList.contains("edit-task-btn")) {
-      openEditTaskModal(Number(target.dataset.cat), Number(target.dataset.task));
-    } else if (target.classList.contains("delete-task-btn")) {
-      openDeleteTaskModal(Number(target.dataset.cat), Number(target.dataset.task));
-    }
-  });
-
-  grid.addEventListener("change", async e => {
-    if (e.target.classList.contains("task-checkbox")) {
-      const catId = Number(e.target.dataset.cat);
-      const taskId = Number(e.target.dataset.task);
-      const li = e.target.closest(".task-item");
-      li.classList.add("toggling");
-      await ChecklistStore.toggleTask(catId, taskId);
-      UI.renderAll(ChecklistStore.getState());
-    }
-  });
-}
-
-function openAddCategoryModal() {
-  UI.Modal({
-    title: "הוספת קטגוריה חדשה",
-    bodyHTML: `<input type="text" id="modal-cat-name" class="modal-input" placeholder="שם הקטגוריה" autofocus>`,
-    confirmText: "הוספה",
-    onConfirm: async root => {
-      const name = root.querySelector("#modal-cat-name").value.trim();
-      if (!name) return false;
-      await ChecklistStore.addCategory(name);
-      UI.renderAll(ChecklistStore.getState());
-      UI.Toast(`קטגוריה "${name}" נוספה`, "success");
-    }
-  });
-}
-
-function openEditCategoryModal(catId) {
-  const cat = ChecklistStore.getState().categories.find(c => c.id === catId);
-  if (!cat) return;
-  UI.Modal({
-    title: "עריכת קטגוריה",
-    bodyHTML: `<input type="text" id="modal-cat-name" class="modal-input" value="${cat.name}">`,
-    confirmText: "שמירה",
-    onConfirm: async root => {
-      const name = root.querySelector("#modal-cat-name").value.trim();
-      if (!name) return false;
-      await ChecklistStore.editCategory(catId, name);
-      UI.renderAll(ChecklistStore.getState());
-      UI.Toast("הקטגוריה עודכנה", "success");
-    }
-  });
-}
-
-function openDeleteCategoryModal(catId) {
-  const cat = ChecklistStore.getState().categories.find(c => c.id === catId);
-  if (!cat) return;
-  UI.Modal({
-    title: "מחיקת קטגוריה",
-    bodyHTML: `<p>האם למחוק את הקטגוריה "<strong>${cat.name}</strong>" וכל המשימות שבה?</p>`,
-    confirmText: "מחיקה",
-    danger: true,
-    onConfirm: async () => {
-      await ChecklistStore.deleteCategory(catId);
-      UI.renderAll(ChecklistStore.getState());
-      UI.Toast("הקטגוריה נמחקה", "info");
-    }
-  });
-}
-
-function openAddTaskModal(catId) {
-  UI.Modal({
-    title: "הוספת משימה",
-    bodyHTML: `<input type="text" id="modal-task-title" class="modal-input" placeholder="תיאור המשימה" autofocus>`,
-    confirmText: "הוספה",
-    onConfirm: async root => {
-      const title = root.querySelector("#modal-task-title").value.trim();
-      if (!title) return false;
-      await ChecklistStore.addTask(catId, title);
-      UI.renderAll(ChecklistStore.getState());
-      UI.Toast("משימה נוספה", "success");
-    }
-  });
-}
-
-function openEditTaskModal(catId, taskId) {
-  const cat = ChecklistStore.getState().categories.find(c => c.id === catId);
-  const task = cat && cat.tasks.find(t => t.id === taskId);
-  if (!task) return;
-  UI.Modal({
-    title: "עריכת משימה",
-    bodyHTML: `<input type="text" id="modal-task-title" class="modal-input" value="${task.title}">`,
-    confirmText: "שמירה",
-    onConfirm: async root => {
-      const title = root.querySelector("#modal-task-title").value.trim();
-      if (!title) return false;
-      await ChecklistStore.editTask(catId, taskId, title);
-      UI.renderAll(ChecklistStore.getState());
-      UI.Toast("המשימה עודכנה", "success");
-    }
-  });
-}
-
-function openDeleteTaskModal(catId, taskId) {
-  UI.Modal({
-    title: "מחיקת משימה",
-    bodyHTML: `<p>האם למחוק משימה זו?</p>`,
-    confirmText: "מחיקה",
-    danger: true,
-    onConfirm: async () => {
-      await ChecklistStore.deleteTask(catId, taskId);
-      UI.renderAll(ChecklistStore.getState());
-      UI.Toast("המשימה נמחקה", "info");
-    }
-  });
-}
-
-function openResetModal() {
-  UI.Modal({
-    title: "איפוס שבועי",
-    bodyHTML: `<p>האם לאפס את כל המשימות בכל הקטגוריות?</p>`,
-    confirmText: "איפוס",
-    danger: true,
-    onConfirm: async () => {
-      await ChecklistStore.resetAllTasks();
-      UI.renderAll(ChecklistStore.getState());
-      UI.Toast("בוצע איפוס שבועי", "success");
-    }
-  });
-}
-
-function startAutoRefresh() {
-  const seconds = CONFIG.autoRefreshSeconds || 8;
-  refreshTimer = setInterval(async () => {
-    if (!GitHubSync.isEnabled()) return;
-    const changed = await ChecklistStore.refreshFromRemote();
-    if (changed) {
-      UI.renderAll(ChecklistStore.getState());
-      UI.Toast("הנתונים עודכנו על-ידי משתמש אחר", "info");
-    }
-    const wasReset = ChecklistStore.checkWeeklyReset();
-    if (wasReset) {
-      UI.renderAll(ChecklistStore.getState());
-      UI.Toast("בוצע איפוס שבועי אוטומטי", "warning");
-    }
-  }, seconds * 1000);
-}
-
+document.addEventListener("DOMContentLoaded", init);
 })();
 </script>
-
 </body>
 </html>
