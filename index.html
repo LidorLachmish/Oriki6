@@ -582,6 +582,8 @@ input { font-family: inherit; }
     </div>
   </section>
 
+  <section class="categories-grid" id="categories-grid"></section>
+
 </main>
 
 <footer class="site-footer">
@@ -766,7 +768,6 @@ input { font-family: inherit; }
     });
   }
 
-  // קטגוריות Find מקורי
   function openDeleteTaskModal(catId, taskId) {
     UI.Modal({
       title: "מחיקת משימה",
@@ -825,7 +826,7 @@ input { font-family: inherit; }
       "name": "חרטום",
       "tasks": [
         { "id": 101, "title": "סידור ארונות", "completed": false, "completedBy": "", "date": "" },
-        { "id": 102, "title": "ניקיון אבק- מסילות בקיר, מנורות, מעל הארונות, מיזוג אוויר", "completed": false, "completedBy": "", "date": "" },
+        { "id": 102, "title": "ניקיון אבק- מסילות בקיר, mנורות, מעל הארונות, מיזוג אוויר", "completed": false, "completedBy": "", "date": "" },
         { "id": 103, "title": "סידור 2 כוכים", "completed": false, "completedBy": "", "date": "" },
         { "id": 104, "title": "פינוי זבל", "completed": false, "completedBy": "", "date": "" },
         { "id": 105, "title": "נעליים לסיקרט", "completed": false, "completedBy": "", "date": "" }
@@ -950,17 +951,6 @@ input { font-family: inherit; }
 // ============================================================
 // config.js — הגדרות GitHub Sync
 // ============================================================
-// אזהרת אבטחה חשובה:
-// הזנת Personal Access Token כאן חושפת אותו לכל מי שצופה בקוד המקור
-// של האתר (כולל מבקרים אנונימיים אם ה-Repository פרטי/ציבורי).
-// מומלץ להשתמש בטוקן עם הרשאות מצומצמות ביותר (Fine-grained PAT,
-// הרשאת Contents: Read & Write בלבד, על ה-Repository הזה בלבד),
-// ולסובב (Rotate) אותו מעת לעת.
-//
-// אם משאירים token ריק, המערכת תעבוד במצב מקומי (localStorage)
-// בלבד, וה-Sync ל-GitHub יהיה מבוטל אוטומטית.
-// ============================================================
-
 const CONFIG = {
   token: "",                 // GitHub Personal Access Token
   owner: "",                 // שם המשתמש / הארגון ב-GitHub
@@ -971,27 +961,6 @@ const CONFIG = {
   autoRefreshSeconds: 1,    // תדירות רענון אוטומטי
   resetIntervalDays: 7       // תדירות איפוס שבועי
 };
-
-document.addEventListener("DOMContentLoaded", () => {
-  const jsonText = document.getElementById("jsonData").textContent;
-  const data = JSON.parse(jsonText);
-  const app = document.getElementById("app");
-
-  if (app && data && data.categories) {
-    data.categories.forEach(category => {
-      app.innerHTML += `<h2>${category.name}</h2>`;
-      if (category.tasks) {
-        category.tasks.forEach(task => {
-          app.innerHTML += `
-            <div>
-              <input type="checkbox">
-              ${task.title}
-            </div>
-          `;
-        });
-      }
-    });
-  }
-});
 </script>
 
+</html>
