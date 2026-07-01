@@ -62,7 +62,6 @@ body::before {
   z-index: 0;
 }
 
-img { max-width: 100%; display: block; }
 button { font-family: var(--font-main); cursor: pointer; border: none; }
 input, select { font-family: var(--font-main); }
 a { color: inherit; text-decoration: none; }
@@ -156,11 +155,7 @@ a { color: inherit; text-decoration: none; }
   display: flex;
   justify-content: cover;
 }
-.header-logo img {
-  width: 100%;
-  object-fit: cover;
-  filter: drop-shadow(0 0 12px rgba(204,0,0,.5)) drop-shadow(0 0 4px rgba(204,0,0,.8));
-}
+
 
 .header-center { text-align: center; }
 
@@ -901,7 +896,6 @@ a { color: inherit; text-decoration: none; }
 
 @media (max-width: 600px) {
   .site-header { grid-template-columns: 60px 1fr 60px; padding: 10px 14px; min-height: 80px; }
-  .header-logo img { width: 100%; }
   .vessel-id { font-size: 1.8rem; }
   .cat-overview { grid-template-columns: repeat(3, 1fr); }
   .stats-bar { grid-template-columns: 1fr; }
@@ -951,8 +945,8 @@ a { color: inherit; text-decoration: none; }
     <img src="assets/emblem.png" alt="סמל W837J">
   </div>
   <div class="header-center">
-    <div class="vessel-id">W837J</div>
-    <div class="vessel-sub">THE CLOWN BEHIND THE GUN</div>
+    <div class="vessel-id"></div>
+    <div class="vessel-sub"></div>
   </div>
 </header>
 
