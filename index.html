@@ -106,10 +106,11 @@ a { color: inherit; text-decoration: none; }
 .site-header {
   position: relative;
   display: grid;
-  grid-template-columns: 120px 1fr 120px;
+  grid-template-columns: 1fr; /* שינוי מ-120px 1fr 120px ל-1fr */
   align-items: center;
+  justify-content: center; /* הוספה */
   gap: 0;
-  padding: 16px 24px;
+  padding: 0; /* שינוי מ-16px 24px ל-0 */
   background: linear-gradient(180deg, #0c0c0c 0%, #080808 100%);
   border-bottom: 2px solid var(--red2);
   overflow: hidden;
@@ -126,7 +127,7 @@ a { color: inherit; text-decoration: none; }
 }
 
 /* diagonal hatch top-left */
-.site-header::before {
+.site-header {
   content: "";
   position: absolute;
   top: 0; right: 0;
@@ -144,16 +145,27 @@ a { color: inherit; text-decoration: none; }
 .header-logo {
   display: flex;
   justify-content: center;
+  align-items: center; /* הוספה */
+  width: 100%; /* הוספה */
+  height: 100%; /* הוספה */
+  position: absolute; /* הוספה */
+  inset: 0; /* הוספה */
+  z-index: 0; /* הוספה */
 }
+   
 .header-logo img {
-  height: 650px;
-  width: 1920px;
-  object-fit: cover;
+  width: 100% !important; /* שינוי מ-1920px */
+  height: 100% !important; /* שינוי מ-650px */
+  object-fit: cover !important; /* שינוי מ-object-fit: cover ל-cover */
   filter: drop-shadow(0 0 12px rgba(204,0,0,.5)) drop-shadow(0 0 4px rgba(204,0,0,.8));
+  display: block; /* הוספה */
 }
 
-.header-center { text-align: center; }
-
+.header-center { 
+  text-align: center;
+  position: relative; /* הוספה */
+  z-index: 1; /* הוספה */
+}
 .vessel-id {
   font-family: var(--font-hud);
   font-size: clamp(2.2rem, 6vw, 3.5rem);
