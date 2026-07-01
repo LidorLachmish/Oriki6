@@ -49,7 +49,7 @@ body {
   min-height: 100vh;
   overflow-x: hidden;
   padding-bottom: 60px;
-} 
+}
 
 body::before {
   content: "";
@@ -62,6 +62,7 @@ body::before {
   z-index: 0;
 }
 
+img { max-width: 100%; display: block; }
 button { font-family: var(--font-main); cursor: pointer; border: none; }
 input, select { font-family: var(--font-main); }
 a { color: inherit; text-decoration: none; }
@@ -70,12 +71,8 @@ a { color: inherit; text-decoration: none; }
 
 /* ── TACTICAL TOP BAR ─────────────────────────────── */
 .top-bar {
-
-  /* */
   background: #050505;
- 
   border-bottom: 1px solid var(--border2);
-  
   padding: 5px 20px;
   display: flex;
   align-items: center;
@@ -85,10 +82,9 @@ a { color: inherit; text-decoration: none; }
   letter-spacing: .18em;
   color: var(--text3);
   text-transform: uppercase;
-
 }
 
-.top-bar-left { display: flex; align-items: center; gap:8px; }
+.top-bar-left { display: flex; align-items: center; gap: 8px; }
 .top-bar-left::before {
   content: "▶";
   color: var(--red);
@@ -98,7 +94,7 @@ a { color: inherit; text-decoration: none; }
 .top-bar-right { display: flex; align-items: center; gap: 16px; }
 .tb-live { display: flex; align-items: center; gap: 5px; color: var(--green); }
 .tb-live-dot {
-  width: 6px;
+  width: 6px; height: 6px;
   border-radius: 50%;
   background: var(--green);
   box-shadow: 0 0 8px var(--green);
@@ -117,14 +113,7 @@ a { color: inherit; text-decoration: none; }
   background: linear-gradient(180deg, #0c0c0c 0%, #080808 100%);
   border-bottom: 2px solid var(--red2);
   overflow: hidden;
-   /*
-   background-image: url("assets/emblem.png");
-   background-repeat: no-repeat;
-   background-position: cover;    
-   background-size: cover; /* או contain בהתאם למה שאתה רוצה */
-   width: 100%;
-   min-height: 100%;
-   */
+  min-height: 100px;
 }
 
 .site-header::after {
@@ -154,9 +143,14 @@ a { color: inherit; text-decoration: none; }
 
 .header-logo {
   display: flex;
-  justify-content: cover;
+  justify-content: center;
 }
-
+.header-logo img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 0 12px rgba(204,0,0,.5)) drop-shadow(0 0 4px rgba(204,0,0,.8));
+}
 
 .header-center { text-align: center; }
 
@@ -181,6 +175,7 @@ a { color: inherit; text-decoration: none; }
   text-transform: uppercase;
   margin-top: 4px;
 }
+
 
 
 /* ── STATS BAR ────────────────────────────────────── */
@@ -295,7 +290,7 @@ a { color: inherit; text-decoration: none; }
 .filter-group { display: flex; gap: 4px; }
 .fbtn {
   padding: 6px 12px;
-  : var(--card);
+  background: var(--card);
   border: 1px solid var(--border);
   border-radius: var(--radius);
   color: var(--text2);
@@ -897,6 +892,7 @@ a { color: inherit; text-decoration: none; }
 
 @media (max-width: 600px) {
   .site-header { grid-template-columns: 60px 1fr 60px; padding: 10px 14px; min-height: 80px; }
+  .header-logo img { height: 100%; width: 100%; }
   .vessel-id { font-size: 1.8rem; }
   .cat-overview { grid-template-columns: repeat(3, 1fr); }
   .stats-bar { grid-template-columns: 1fr; }
@@ -946,8 +942,8 @@ a { color: inherit; text-decoration: none; }
     <img src="assets/emblem.png" alt="סמל W837J">
   </div>
   <div class="header-center">
-    <div class="vessel-id"></div>
-    <div class="vessel-sub"></div>
+    <div class="vessel-id">W837J</div>
+    <div class="vessel-sub">THE CLOWN BEHIND THE GUN</div>
   </div>
 </header>
 
